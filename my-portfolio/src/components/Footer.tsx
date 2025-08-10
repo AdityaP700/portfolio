@@ -32,7 +32,7 @@ export const Footer = () => {
               </a>
               , fueled by curiosity (and coffee).
             </p>
-            <p>© {year} Aditya Pattanayak. All rights reserved (yes, even my L takes)..</p>
+            <p>© {year} Aditya Pattanayak. All rights reserved (even the questionable commits)..</p>
           </div>
           
           <div className="flex items-center gap-4">

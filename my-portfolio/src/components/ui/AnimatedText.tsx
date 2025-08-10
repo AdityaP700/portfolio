@@ -1,17 +1,23 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { Special_Elite } from "next/font/google";
+
+const typewriterFont = Special_Elite({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export default function AnimatedName() {
   const originalText = "Aditya";
   const altTexts = ["noob coder", "ngmi dev", "mad coder", "vibecoder"];
 
-  // timings (ms)
-const TYPING_SPEED = 100; // slower, more deliberate keystrokes
-const DELETING_SPEED = 60; // still quick, but not instant
-const HOLD_AFTER_TYPE = 2000; // hold the alt text for 2 seconds
-const MIN_PAUSE = 6000;
-const MAX_PAUSE = 9000;
+  // total time per phase (ms)
+  const TOTAL_TYPING_TIME = 1000; // total time to fully type a word
+  const TOTAL_DELETING_TIME = 800; // total time to fully delete a word
+  const HOLD_AFTER_TYPE = 1500; // pause after typing
+  const HOLD_AFTER_DELETE = 500; // pause after deleting
+  const MIN_PAUSE = 1000; // pause before next alt text
 
   const [displayedText, setDisplayedText] = useState<string>(originalText);
   const altIndexRef = useRef<number>(0);
@@ -19,63 +25,70 @@ const MAX_PAUSE = 9000;
   const isMountedRef = useRef<boolean>(true);
 
   useEffect(() => {
-  // start first alt right away
-  scheduleNextAlt(0);
-
-  return () => {
-    isMountedRef.current = false;
-    clearAllTimers();
-  };
-}, []);
-
+    scheduleNextAlt(MIN_PAUSE);
+    return () => {
+      isMountedRef.current = false;
+      clearAllTimers();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function clearAllTimers() {
     timersRef.current.forEach((id) => clearTimeout(id));
     timersRef.current = [];
   }
 
-  function randomPause() {
-    return Math.floor(Math.random() * (MAX_PAUSE - MIN_PAUSE + 1)) + MIN_PAUSE;
-  }
-
   function scheduleNextAlt(delay = 0) {
     const t = window.setTimeout(() => {
       if (!isMountedRef.current) return;
       const word = altTexts[altIndexRef.current % altTexts.length];
-      typeWord(word, 1); // start typing from 1 to show progressive typing
+      typeWord(word, 1);
     }, delay);
     timersRef.current.push(t);
   }
 
   function typeWord(word: string, pos: number) {
     if (!isMountedRef.current) return;
+
+    const typingSpeed = Math.max(TOTAL_TYPING_TIME / word.length, 20); // per char
+
     if (pos <= word.length) {
       setDisplayedText(word.slice(0, pos));
-      const t = window.setTimeout(() => typeWord(word, pos + 1), TYPING_SPEED);
+      const t = window.setTimeout(() => typeWord(word, pos + 1), typingSpeed);
       timersRef.current.push(t);
     } else {
-      // finished typing, hold then delete
-      const t = window.setTimeout(() => deleteWord(word.length), HOLD_AFTER_TYPE);
+      const t = window.setTimeout(
+        () => deleteWord(word.length, word.length),
+        HOLD_AFTER_TYPE
+      );
       timersRef.current.push(t);
     }
   }
 
-  function deleteWord(remaining: number) {
+  function deleteWord(remaining: number, wordLength: number) {
     if (!isMountedRef.current) return;
+
+    const deletingSpeed = Math.max(TOTAL_DELETING_TIME / wordLength, 20); // per char
+
     if (remaining > 0) {
       setDisplayedText((prev) => prev.slice(0, -1));
-      const t = window.setTimeout(() => deleteWord(remaining - 1), DELETING_SPEED);
+      const t = window.setTimeout(
+        () => deleteWord(remaining - 1, wordLength),
+        deletingSpeed
+      );
       timersRef.current.push(t);
     } else {
-      // after deleting the alt word completely, show original and schedule next alt
       setDisplayedText(originalText);
       altIndexRef.current += 1;
-      scheduleNextAlt(randomPause());
+      scheduleNextAlt(MIN_PAUSE);
     }
   }
 
   return (
-    <div className="inline-block select-none" aria-label="Animated name">
+    <div
+      className={`inline-block select-none ${typewriterFont.className}`}
+      aria-label="Animated name"
+    >
       <span className="font-bold text-lg" style={{ whiteSpace: "nowrap" }}>
         {displayedText}
         <span
@@ -89,8 +102,6 @@ const MAX_PAUSE = 9000;
           |
         </span>
       </span>
-
-      {/* CSS for blinking caret */}
       <style>{`
         @keyframes blink {
           50% { opacity: 0; }

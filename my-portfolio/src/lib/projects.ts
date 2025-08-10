@@ -4,7 +4,7 @@ export type ProjectType = {
   description: string;
   technologies: string[];
   image: string;
-  link: string;
+  link: string | null;
   githubLink?: string;
   isLive?: boolean;    // new optional flag to mark live projects
 };
@@ -15,7 +15,7 @@ export const projects: ProjectType[] = [
     description: "An intelligent Chrome extension protecting users from phishing attacks using on-device Machine Learning, heuristic analysis, and homograph detection.",
     technologies: ["JavaScript", "TensorFlow.js", "Machine Learning", "Chrome API", "HTML/CSS"],
     image: "/PrivacyGuard.png", // TODO: Add image path
-    link: "#", // TODO: Add link to Chrome Web Store or demo video
+    link: null, // TODO: Add link to Chrome Web Store or demo video
     githubLink: "https://github.com/AdityaP700/PrivacyGuard",
     isLive: false,  // example: not live
  // TODO: Update link

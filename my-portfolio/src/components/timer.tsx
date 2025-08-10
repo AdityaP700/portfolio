@@ -23,7 +23,7 @@ function PixelatedClock() {
     return () => clearInterval(timerId);
   }, []);
 
-return <div className="pixelated-font text-sm mt-2">{time}</div>;
+return <div className="pixelated-font text-xs mt-2">{time}</div>;
 }
 
 export default PixelatedClock;

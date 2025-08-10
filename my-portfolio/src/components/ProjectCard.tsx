@@ -51,13 +51,13 @@ const { title, description, technologies, image, link, githubLink, isLive } = pr
       {/* Right Side with spotlight */}
 <CardSpotlight className="flex flex-1 flex-col justify-between p-4 min-w-0 rounded-none border-none bg-transparent">
   {/* Title and GitHub Icon */}
-  <div className="flex items-start justify-between gap-2">
+  <div className="flex items-start justify-between gap-2 relative z-10">
   <h3 className="text-l font-semibold text-foreground line-clamp-1 flex items-center gap-2">
     {title}
     {isLive && (
       <span className="inline-flex items-center gap-1 text-sm font-medium text-green-500">
         <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-        Live
+        
       </span>
     )}
   </h3>

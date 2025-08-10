@@ -15,7 +15,7 @@ import LocationWeather from "@/components/weather";
 export default function Home() {
   return (
     <>
-      <header className="bg-background/90 backdrop-blur-md border-b border-border py-1 px-6 flex justify-between items-center text-white text-xs sm:text-sm select-none"> 
+      <header className="bg-background/90 backdrop-blur-md py-1 px-6 flex justify-between items-center text-white text-xs sm:text-sm select-none">
   <div className="text-[0.55rem] tracking-tight opacity-80">
     <PixelatedClock />
   </div>
@@ -23,8 +23,6 @@ export default function Home() {
     <LocationWeather />
   </div>
 </header>
-
-
       <main className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-8 md:p-20 bg-gradient-to-br from-background via-background to-muted/20 text-foreground">
         <div className="max-w-2xl w-full space-y-12">
           {/* --- Header: PFP and Name --- */}
@@ -42,18 +40,17 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col items-center sm:items-start space-y-1">
-  <AnimatedName />
-  <a
-    href="https://x.com/AdityaPat_"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-all duration-200 group/link"
-  >
-    @AdityaPat_
-    <ExternalLink className="w-3 h-3 opacity-0 group-hover/link:opacity-100 transition-all duration-200 transform group-hover/link:translate-x-0.5" />
-  </a>
-</div>
-
+              <AnimatedName />
+              <a
+                href="https://x.com/AdityaPat_"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-all duration-200 group/link"
+              >
+                @AdityaPat_
+                <ExternalLink className="w-3 h-3 opacity-0 group-hover/link:opacity-100 transition-all duration-200 transform group-hover/link:translate-x-0.5" />
+              </a>
+            </div>
           </section>
           {/* --- Introduction Text --- */}
           <section className="space-y-4 text-pretty text-muted-foreground text-sm leading-relaxed">
@@ -98,7 +95,8 @@ export default function Home() {
             </p>
             <p>
               Picking projects can take me ages, but breaking them should count
-              as a hobby. When I&apos;m not breaking production, you&apos;ll find me you’ll usually find me{" "}
+              as a hobby. When I&apos;m not breaking production, you&apos;ll
+              find me you’ll usually find me{" "}
               <span className="font-semibold">reading articles</span>,{" "}
               <span className="font-semibold">listening to music</span>, or{" "}
               <span className="font-semibold hover:text-primary transition-colors">
@@ -109,7 +107,7 @@ export default function Home() {
           {/* --- Action Buttons: Socials & Resume --- */}
           <section className="space-y-4 text-pretty text-muted-foreground text-sm leading-relaxed">
             <h2 className="text-xl font-semibold text-center sm:text-left text-foreground/90">
-Touch grass together (digitally):
+              Touch grass together (digitally):
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {/* GitHub */}
@@ -184,7 +182,7 @@ Touch grass together (digitally):
             <h2 className="text-xl font-semibold text-center sm:text-left">
               My Tech Stack (Real)
             </h2>
-    
+
             <div className="space-y-3">
               <h3 className="font-medium text-primary">Core</h3>
               <div className="flex flex-wrap gap-2">
