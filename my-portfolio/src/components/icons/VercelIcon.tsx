@@ -1,12 +1,5 @@
 import { SVGProps } from 'react';
 
 export const VercelIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    role="img"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <title>Vercel</title>
-<path d="m12 1.608 12 20.784H0Z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><g fill="none"><rect width="256" height="256" fill="#f4f2ed" rx="60"/><path fill="#000" d="m128 34l95 164.853H33z"/></g></svg>
 );

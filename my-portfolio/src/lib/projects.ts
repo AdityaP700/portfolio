@@ -6,6 +6,7 @@ export type ProjectType = {
   image: string;
   link: string;
   githubLink?: string;
+  isLive?: boolean;    // new optional flag to mark live projects
 };
 
 export const projects: ProjectType[] = [
@@ -15,7 +16,9 @@ export const projects: ProjectType[] = [
     technologies: ["JavaScript", "TensorFlow.js", "Machine Learning", "Chrome API", "HTML/CSS"],
     image: "/PrivacyGuard.png", // TODO: Add image path
     link: "#", // TODO: Add link to Chrome Web Store or demo video
-    githubLink: "https://github.com/AdityaP700/PrivacyGuard", // TODO: Update link
+    githubLink: "https://github.com/AdityaP700/PrivacyGuard",
+    isLive: false,  // example: not live
+ // TODO: Update link
   },
   {
     title: "SplitMate",
@@ -23,7 +26,8 @@ export const projects: ProjectType[] = [
     technologies: ["React", "Node.js", "Web3.js", "Socket.io", "MongoDB", "AI"],
     image: "/SplitMate.png",
     link: "https://split-mate-43.vercel.app/", // TODO: Update link
-    githubLink: "https://github.com/AdityaP700/split-mate", // TODO: Update link
+    githubLink: "https://github.com/AdityaP700/split-mate",
+    isLive: true,   // TODO: Update link
   },
   {
     title: "VibeCraft",
@@ -31,6 +35,7 @@ export const projects: ProjectType[] = [
     technologies: ["MERN Stack", "Socket.io", "StyleGAN", "MediaPipe", "TensorFlow.js"],
     image: "/VibeCraft.png", // TODO: Add image path
     link: "https://vibecraft-kappa.vercel.app/", // TODO: Update link
-    githubLink: "https://github.com/adityajha2005/vibecraft", // TODO: Update link
+    githubLink: "https://github.com/adityajha2005/vibecraft",
+    isLive: true, // TODO: Update link
   },
 ];

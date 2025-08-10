@@ -1,183 +1,101 @@
-"use client"
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
 
 export default function AnimatedName() {
-  const [hovered, setHovered] = useState(false);
-  const [isEating, setIsEating] = useState(false);
-  const [currentText, setCurrentText] = useState("Aditya");
-  const [eatenChars, setEatenChars] = useState(0);
-  const [pacmanMouth, setPacmanMouth] = useState(false);
-
   const originalText = "Aditya";
-  const altTexts = ["ngmi dev", "mad coder", "always building", "vibe coder", "pixel pusher"];
+  const altTexts = ["noob coder", "ngmi dev", "mad coder", "vibecoder"];
+
+  // timings (ms)
+const TYPING_SPEED = 100; // slower, more deliberate keystrokes
+const DELETING_SPEED = 60; // still quick, but not instant
+const HOLD_AFTER_TYPE = 2000; // hold the alt text for 2 seconds
+const MIN_PAUSE = 6000;
+const MAX_PAUSE = 9000;
+
+  const [displayedText, setDisplayedText] = useState<string>(originalText);
+  const altIndexRef = useRef<number>(0);
+  const timersRef = useRef<number[]>([]);
+  const isMountedRef = useRef<boolean>(true);
 
   useEffect(() => {
-    let interval;
-    if (isEating && eatenChars < originalText.length) {
-      interval = setInterval(() => {
-        setEatenChars(prev => prev + 1);
-        setPacmanMouth(prev => !prev); // Animate mouth opening/closing
-      }, 200);
-    } else if (isEating && eatenChars >= originalText.length) {
-      // Text fully eaten, show new text
-      setTimeout(() => {
-        const randomAlt = altTexts[Math.floor(Math.random() * altTexts.length)];
-        setCurrentText(randomAlt);
-        setIsEating(false);
-        setEatenChars(0);
-      }, 300);
+  // start first alt right away
+  scheduleNextAlt(0);
+
+  return () => {
+    isMountedRef.current = false;
+    clearAllTimers();
+  };
+}, []);
+
+
+  function clearAllTimers() {
+    timersRef.current.forEach((id) => clearTimeout(id));
+    timersRef.current = [];
+  }
+
+  function randomPause() {
+    return Math.floor(Math.random() * (MAX_PAUSE - MIN_PAUSE + 1)) + MIN_PAUSE;
+  }
+
+  function scheduleNextAlt(delay = 0) {
+    const t = window.setTimeout(() => {
+      if (!isMountedRef.current) return;
+      const word = altTexts[altIndexRef.current % altTexts.length];
+      typeWord(word, 1); // start typing from 1 to show progressive typing
+    }, delay);
+    timersRef.current.push(t);
+  }
+
+  function typeWord(word: string, pos: number) {
+    if (!isMountedRef.current) return;
+    if (pos <= word.length) {
+      setDisplayedText(word.slice(0, pos));
+      const t = window.setTimeout(() => typeWord(word, pos + 1), TYPING_SPEED);
+      timersRef.current.push(t);
+    } else {
+      // finished typing, hold then delete
+      const t = window.setTimeout(() => deleteWord(word.length), HOLD_AFTER_TYPE);
+      timersRef.current.push(t);
     }
-    
-    return () => clearInterval(interval);
-  }, [isEating, eatenChars, originalText.length, altTexts]);
+  }
 
-  const handleMouseEnter = () => {
-    setHovered(true);
-    setTimeout(() => {
-      setIsEating(true);
-    }, 500); // Delay before eating starts
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-    setIsEating(false);
-    setEatenChars(0);
-    setCurrentText(originalText);
-    setPacmanMouth(false);
-  };
-
-  const visibleText = isEating ? currentText.slice(eatenChars) : currentText;
-  const pacmanPosition = isEating ? eatenChars * 0.6 : 0; // Approximate character width
+  function deleteWord(remaining: number) {
+    if (!isMountedRef.current) return;
+    if (remaining > 0) {
+      setDisplayedText((prev) => prev.slice(0, -1));
+      const t = window.setTimeout(() => deleteWord(remaining - 1), DELETING_SPEED);
+      timersRef.current.push(t);
+    } else {
+      // after deleting the alt word completely, show original and schedule next alt
+      setDisplayedText(originalText);
+      altIndexRef.current += 1;
+      scheduleNextAlt(randomPause());
+    }
+  }
 
   return (
-    <div
-      className="flex items-center gap-2 relative overflow-visible cursor-pointer h-12"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* Pac-Man */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            key="pacman"
-            initial={{ x: -60, opacity: 0 }}
-            animate={{ 
-              x: pacmanPosition,
-              opacity: 1,
-              rotate: pacmanMouth ? 0 : 45 
-            }}
-            exit={{ x: -60, opacity: 0 }}
-            transition={{ 
-              x: { duration: 0.2 },
-              opacity: { duration: 0.3 },
-              rotate: { duration: 0.1 }
-            }}
-            className="absolute z-10 text-2xl"
-            style={{ left: `${pacmanPosition}em` }}
-          >
-            <div className="relative">
-              {/* Pac-Man body */}
-              <motion.div
-                animate={{ 
-                  clipPath: pacmanMouth 
-                    ? "polygon(100% 74%, 44% 48%, 100% 21%)" 
-                    : "polygon(100% 50%, 100% 50%, 100% 50%)"
-                }}
-                transition={{ duration: 0.1 }}
-                className="w-6 h-6 bg-yellow-400 rounded-full relative"
-              >
-                {/* Eye */}
-                <div className="absolute top-1 right-1 w-1 h-1 bg-black rounded-full"></div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="inline-block select-none" aria-label="Animated name">
+      <span className="font-bold text-lg" style={{ whiteSpace: "nowrap" }}>
+        {displayedText}
+        <span
+          style={{
+            display: "inline-block",
+            width: 10,
+            marginLeft: 6,
+            animation: "blink 1s step-end infinite",
+          }}
+        >
+          |
+        </span>
+      </span>
 
-      {/* Crumbs animation */}
-      <AnimatePresence>
-        {isEating && (
-          <motion.div
-            className="absolute flex gap-1"
-            style={{ left: `${pacmanPosition - 1}em` }}
-          >
-            {[...Array(3)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ scale: 0, y: 0 }}
-                animate={{ 
-                  scale: [0, 1, 0],
-                  y: [-10, -20, -30],
-                  opacity: [1, 1, 0]
-                }}
-                transition={{ 
-                  duration: 0.6,
-                  delay: i * 0.1,
-                  repeat: Infinity,
-                  repeatDelay: 0.3
-                }}
-                className="w-1 h-1 bg-orange-400 rounded-full"
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Text */}
-      <motion.span
-        className="font-bold text-2xl sm:text-3xl relative z-0"
-        style={{ 
-          paddingLeft: hovered ? '2rem' : '0',
-          transition: 'padding-left 0.3s ease'
-        }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={currentText + eatenChars}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            {isEating && eatenChars < originalText.length ? (
-              <>
-                {/* Eaten characters (invisible but maintain space) */}
-                <span className="opacity-0">
-                  {originalText.slice(0, eatenChars)}
-                </span>
-                {/* Remaining visible characters */}
-                <span className="inline-block">
-                  {originalText.slice(eatenChars)}
-                </span>
-              </>
-            ) : (
-              <span className="inline-block">
-                {visibleText}
-              </span>
-            )}
-          </motion.span>
-        </AnimatePresence>
-      </motion.span>
-
-      {/* Chomp sound effect visualization */}
-      <AnimatePresence>
-        {isEating && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: [0, 1.2, 0] }}
-            transition={{ 
-              duration: 0.3,
-              repeat: Infinity,
-              repeatDelay: 0.1
-            }}
-            className="absolute text-xs font-bold text-yellow-600 opacity-70"
-            style={{ left: `${pacmanPosition + 1}em`, top: '-1rem' }}
-          >
-            CHOMP!
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* CSS for blinking caret */}
+      <style>{`
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+      `}</style>
     </div>
   );
 }
