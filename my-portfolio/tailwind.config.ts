@@ -24,6 +24,10 @@ const config: Config = {
         foreground: "hsl(var(--foreground))",
         "custom-dark": "#0c0c0d", // Your custom dark color
       },
+      boxShadow:{
+                'glow': '0 0 15px rgba(255, 255, 255, 0.1)',
+
+      }
     },
   },
   plugins: [tailwindcssAnimate],

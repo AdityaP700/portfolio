@@ -3,7 +3,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, FileDown, Mail, ExternalLink } from "lucide-react";
 import AnimatedName from "@/components/ui/AnimatedText";
-
+import { Badge } from "@/components/ui/badge";
+import { coreSkills, learningSkills, bonusSkills } from "@/lib/skills";
+import { projects } from "@/lib/projects";
+import  ProjectCard  from "@/components/ProjectCard";
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-8 md:p-20 bg-gradient-to-br from-background via-background to-muted/20 text-foreground">
@@ -40,7 +43,7 @@ export default function Home() {
 <section className="space-y-4 text-pretty text-muted-foreground text-sm leading-relaxed">
   <p>
     Hyy, I&apos;m <span className="font-bold text-foreground">Aditya</span>.{" "}
-    <span className="font-semibold text-foreground">20-year-old ngmi</span> from{" "}
+    <span className="font-semibold text-foreground">20-year-old ngmi dev</span> from{" "}
     <span className="font-semibold text-foreground">Bhubaneswar, Odisha</span>{" "}
     the kind of person who jumps into things without knowing all the answers.
   </p>
@@ -80,78 +83,156 @@ export default function Home() {
 </section>
 
         {/* --- Action Buttons: Socials & Resume --- */}
-        <section className="space-y-6">
-          <h2 className="text-xl font-semibold text-center sm:text-left text-foreground/90">
-            Well, you can locate me here
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Button 
-              asChild 
-              className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              <a href="https://github.com/AdityaPatro" target="_blank" rel="noopener noreferrer">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                <Github className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300" /> 
-                GitHub
-              </a>
-            </Button>
-            
-            <Button 
-              asChild
-              className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              <a href="https://linkedin.com/in/adityapattanayak" target="_blank" rel="noopener noreferrer">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                <Linkedin className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" /> 
-                LinkedIn
-              </a>
-            </Button>
-            
-            <Button 
-              asChild
-              className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              <a href="https://x.com/AdityaPat_" target="_blank" rel="noopener noreferrer">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                <svg className="mr-2 h-4 w-4 group-hover:-rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-                </svg>
-                X
-              </a>
-            </Button>
-            
-            <Button 
-              asChild
-              className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              <a href="mailto:your.email@example.com">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" /> 
-                Email
-              </a>
-            </Button>
-          </div>
-        </section>
+<section className="space-y-4 text-pretty text-muted-foreground text-sm leading-relaxed">
+  <h2 className="text-xl font-semibold text-center sm:text-left text-foreground/90">
+    Well, you can locate me here
+  </h2>
+  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    {/* GitHub */}
+    <Button 
+      asChild 
+      className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+    >
+      <a href="https://github.com/AdityaP700" target="_blank" rel="noopener noreferrer">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+        <Github className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300" /> 
+        GitHub
+      </a>
+    </Button>
 
-        <section className="space-y-6">
-          <h2 className="text-xl font-semibold text-center sm:text-left text-foreground/90">
-            Looking for my credentials?
-          </h2>
-          <div className="flex justify-center sm:justify-start">
-            <Button 
-              variant="secondary" 
-              asChild 
-              className="group relative px-8 py-3 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-r from-muted to-muted/80 hover:from-primary/10 hover:to-primary/5 border-2 border-border/40 hover:border-primary/30"
-            >
-              <a href="/Aditya_Resume.pdf" download className="flex items-center gap-2">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 rounded"></div>
-                <FileDown className="h-4 w-4 group-hover:animate-bounce" /> 
-                <span className="font-medium">My CV</span>
-                <div className="w-2 h-2 rounded-full bg-primary/60 animate-pulse"></div>
-              </a>
-            </Button>
-          </div>
-        </section>
+    {/* LinkedIn */}
+    <Button 
+      asChild
+      className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+    >
+      <a href="https://www.linkedin.com/in/aditya-pattanayak-6b303b267/" target="_blank" rel="noopener noreferrer">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+        <Linkedin className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" /> 
+        LinkedIn
+      </a>
+    </Button>
+
+    {/* X */}
+    <Button 
+      asChild
+      className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+    >
+      <a href="https://x.com/AdityaPat_" target="_blank" rel="noopener noreferrer">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+        <svg className="mr-2 h-4 w-4 group-hover:-rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+        </svg>
+        X
+      </a>
+    </Button>
+
+    {/* Email */}
+    <Button 
+      asChild
+      className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+    >
+      <a href="mailto:adityaa32078@example.com">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+        <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" /> 
+        Email
+      </a>
+    </Button>
+  </div>
+</section>
+{/* Skills */}
+<section className="space-y-6">
+  <h2 className="text-xl font-semibold text-center sm:text-left">
+    Skills & Tools
+  </h2>
+  
+  <div className="space-y-3">
+    <h3 className="font-medium text-primary">Core</h3>
+    <div className="flex flex-wrap gap-2">
+      {coreSkills.map((skill) => (
+        <Badge key={skill.name} variant="secondary" 
+        className="flex items-center gap-2 px-3 py-1.5 text-sm transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:bg-muted">
+          <skill.icon className="h-4 w-4" />
+          <span>{skill.name}</span>
+        </Badge>
+      ))}
+    </div>
+  </div>
+
+  <div className="space-y-3">
+    <h3 className="font-medium text-primary">Currently Learning</h3>
+    <div className="flex flex-wrap gap-2">
+      {learningSkills.map((skill) => (
+        <Badge key={skill.name} variant="secondary" className="flex items-center gap-2 px-3 py-1.5 text-sm
+        transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:bg-muted">
+          <skill.icon className="h-4 w-4" />
+          <span>{skill.name}</span>
+        </Badge>
+      ))}
+    </div>
+  </div>
+
+  <div className="space-y-3">
+    <h3 className="font-medium text-primary">Bonus</h3>
+    <div className="flex flex-wrap gap-2">
+      {bonusSkills.map((skill) => (
+        <Badge key={skill.name} variant="secondary" className="flex items-center gap-2 px-3 py-1.5 text-sm
+        transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:bg-muted">
+          <skill.icon className="h-4 w-4" />
+          <span>{skill.name}</span>
+        </Badge>
+      ))}
+    </div>
+  </div>
+</section>
+{/* --- Projects Section --- */}
+<section className="space-y-6">
+  <h2 className="text-2xl font-bold text-center sm:text-left">
+    Proof of Work
+  </h2>
+<div className="flex flex-col gap-6">
+    {projects.map((project) => (
+      <ProjectCard key={project.title} project={project} />
+    ))}
+  </div>
+</section>
+{/* --- GitHub Contributions Chart --- */}
+<section className="space-y-4 mt-8">
+  <h2 className="text-lg font-semibold text-center sm:text-left text-foreground/90">
+    My GitHub Activity
+  </h2>
+  <div className="rounded-lg overflow-hidden border border-border/40 bg-muted/30 p-3">
+    <Image
+      src="https://ghchart.rshah.org/AdityaP700"
+      alt="GitHub Contributions Chart"
+      width={800}
+      height={160}
+      className="w-full h-auto opacity-90 hover:opacity-100 transition-opacity duration-300"
+      unoptimized
+      priority
+    />
+  </div>
+</section>
+{/* --- Resume Section --- */}
+<section className="space-y-6">
+  <h2 className="text-xl font-semibold text-center sm:text-left text-foreground/90">
+    Looking for my credentials?
+  </h2>
+  <div className="flex justify-center sm:justify-start">
+    <Button 
+      variant="secondary" 
+      asChild 
+      className="group relative px-8 py-3 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-r from-muted to-muted/80 hover:from-primary/10 hover:to-primary/5 border-2 border-border/40 hover:border-primary/30"
+    >
+      <a href="/Aditya_Resume.pdf" download className="flex items-center gap-2">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 rounded"></div>
+        <FileDown className="h-4 w-4 group-hover:animate-bounce" /> 
+        <span className="font-medium">My CV</span>
+        <div className="w-2 h-2 rounded-full bg-primary/60 animate-pulse"></div>
+      </a>
+    </Button>
+  </div>
+</section>
+
       </div>
     </main>
   );
