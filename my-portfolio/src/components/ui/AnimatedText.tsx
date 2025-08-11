@@ -16,7 +16,6 @@ export default function AnimatedName() {
   const TOTAL_TYPING_TIME = 1000; // total time to fully type a word
   const TOTAL_DELETING_TIME = 800; // total time to fully delete a word
   const HOLD_AFTER_TYPE = 1500; // pause after typing
-  const HOLD_AFTER_DELETE = 500; // pause after deleting
   const MIN_PAUSE = 1000; // pause before next alt text
 
   const [displayedText, setDisplayedText] = useState<string>(originalText);

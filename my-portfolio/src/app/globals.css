@@ -8,7 +8,42 @@
   font-size: 1rem;
   letter-spacing: 2px;
 }
+@keyframes aurora-bg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.aurora-background {
+  background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);
+  /* For a more colorful option, try this:
+  background: linear-gradient(-45deg, #0c0c0d, #1a1a2e, #16213e, #0f3460);
+  background-size: 400% 400%;
+  animation: aurora-bg 15s ease infinite;
+  */
+}
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
 
+/* --- Animated Gradient Text for your Name --- */
+@keyframes gradient-text {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.gradient-text {
+  background: linear-gradient(to right, #ffffff, #a7a7a7, #ffffff);
+  background-size: 200% 200%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradient-text 5s ease infinite;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

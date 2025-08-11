@@ -15,18 +15,17 @@ import LocationWeather from "@/components/weather";
 export default function Home() {
   return (
     <>
-      <header className="bg-background/90 backdrop-blur-md py-1 px-6 flex justify-between items-center text-white text-xs sm:text-sm select-none">
-  <div className="text-[0.55rem] tracking-tight opacity-80">
-    <PixelatedClock />
-  </div>
-  <div>
-    <LocationWeather />
-  </div>
-</header>
-      <main className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-8 md:p-20 bg-gradient-to-br from-background via-background to-muted/20 text-foreground">
-        <div className="max-w-2xl w-full space-y-12">
-          {/* --- Header: PFP and Name --- */}
-          <section className="flex flex-col sm:flex-row items-center gap-6 group">
+      <header className="aurora-background backdrop-blur-md py-1 px-6 flex justify-between items-center text-white text-base sm:text-sm select-none">
+        <div className="text-[0.55rem] tracking-tight opacity-80">
+          <PixelatedClock />
+        </div>
+        <div>
+          <LocationWeather />
+        </div>
+      </header>
+      <main className="aurora-background flex flex-col items-center p-4 sm:p-8">
+        <div className="max-w-2xl w-full space-y-16">
+          <section className="flex flex-col items-center pt-16 space-y-2">
             <div className="relative">
               <Image
                 src="/X_pfp.jpg"
@@ -39,7 +38,7 @@ export default function Home() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
-            <div className="flex flex-col items-center sm:items-start space-y-1">
+            <div className="flex flex-col items-center  space-y-1">
               <AnimatedName />
               <a
                 href="https://x.com/AdityaPat_"
@@ -106,10 +105,10 @@ export default function Home() {
           </section>
           {/* --- Action Buttons: Socials & Resume --- */}
           <section className="space-y-4 text-pretty text-muted-foreground text-sm leading-relaxed">
-            <h2 className="text-xl font-semibold text-center sm:text-left text-foreground/90">
+            <h2 className=" font-semibold text-center sm:text-left text-foreground/90 text-base">
               Touch grass together (digitally):
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-base">
               {/* GitHub */}
               <Button
                 asChild
@@ -179,7 +178,7 @@ export default function Home() {
           </section>
           {/* Skills */}
           <section className="space-y-6">
-            <h2 className="text-xl font-semibold text-center sm:text-left">
+            <h2 className="text-base font-semibold text-center sm:text-left">
               My Tech Stack (Real)
             </h2>
 
@@ -190,7 +189,7 @@ export default function Home() {
                   <Badge
                     key={skill.name}
                     variant="secondary"
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:bg-muted"
+                    className="flex items-center gap-2 px-3 py-1.5 transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:bg-muted text-sm"
                   >
                     <skill.icon className="h-4 w-4" />
                     <span>{skill.name}</span>
@@ -235,7 +234,7 @@ export default function Home() {
           </section>
           {/* --- Projects Section --- */}
           <section className="space-y-6">
-            <h2 className="text-xl font-bold text-center sm:text-left">
+            <h2 className=" font-bold text-center sm:text-left text-base">
               Proof of Work
             </h2>
             <div className="flex flex-col gap-6">
@@ -248,10 +247,10 @@ export default function Home() {
           <section>
             <GitHubContributions
               theme={{
-                light: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"], // 5 colors
-                dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"], // 5 colors for dark mode
+                light: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"], 
+                dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"], 
               }}
-              maxLevel={4} // maxLevel corresponds to number of color steps minus one
+              maxLevel={4} 
             />
           </section>
 
