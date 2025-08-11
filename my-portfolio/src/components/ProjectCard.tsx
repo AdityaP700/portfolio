@@ -1,29 +1,74 @@
+// src/components/ProjectCard.tsx
 "use client";
+
+import Image, { ImageProps } from "next/image";
+import React from "react";
 import { motion } from "framer-motion";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 import { Github } from "lucide-react";
-// Mock PixelImage component for demonstration
-const PixelImage = ({ src, className, ...props }) => (
-  <img src={src} alt="" className={className} {...props} />
-);
 
 interface Project {
   title: string;
   icon?: React.ReactNode;
   description: string;
   technologies?: string[];
-  image: string;
-  link?: string;
-  githubLink?: string;
+  image: string;                // path under /public or external (allowed by next.config)
+  link?: string | null;        // may be null
+  githubLink?: string;         // optional
+  isLive?: boolean;
 }
 
 interface ProjectCardProps {
   project: Project;
 }
 
+/**
+ * PixelImage: wrapper for next/image.
+ * Use Next's ImageProps so TS knows 'src' etc. types.
+ * The parent must provide fixed width/height (we use a wrapper div w/ h).
+ */
+const PixelImage: React.FC<
+  Pick<ImageProps, "src" | "alt" | "className" | "priority" | "placeholder">
+> = ({ src, alt = "", className, ...props }) => {
+  return (
+    <div className="relative w-[160px] h-[160px]">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        style={{ objectFit: "contain" }}
+        className={className}
+        {...(props as Omit<ImageProps, "src" | "alt" | "className">)}
+      />
+    </div>
+  );
+};
+
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { title, description, technologies, image, link, githubLink, isLive } =
     project;
+
+  // Explicit children typing avoids using {} empty-object type
+  const LeftWrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) =>
+    link ? (
+      <a
+        href={link ?? undefined} // ensures href type is string | undefined, not null
+        target="_blank"
+        rel="noopener noreferrer"
+        className="h-full flex items-center justify-center bg-muted"
+        style={{ width: 160 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </a>
+    ) : (
+      <div
+        className="h-full flex items-center justify-center bg-muted"
+        style={{ width: 160 }}
+      >
+        {children}
+      </div>
+    );
 
   return (
     <motion.div
@@ -31,23 +76,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       transition={{ duration: 0.25 }}
       className="flex h-48 w-full overflow-hidden rounded-xl border border-border bg-card"
     >
-      {/* Left Side - Pixel Image */}
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="h-full flex items-center justify-center bg-muted"
-        style={{ width: "160px" }} 
-      >
+      <LeftWrapper>
         <div className="flex items-center justify-center w-[160px] h-[160px]">
-          <PixelImage src={image} className="object-contain w-full h-full" />
+          <PixelImage src={image} alt={title} className="object-contain w-full h-full" />
         </div>
-      </a>
+      </LeftWrapper>
 
-      {/* Right Side */}
-      {/* Right Side with spotlight */}
       <CardSpotlight className="flex flex-1 flex-col justify-between p-4 min-w-0 rounded-none border-none bg-transparent">
-        {/* Title and GitHub Icon */}
         <div className="flex items-start justify-between gap-2 relative z-10">
           <h3 className="text-l font-semibold text-foreground line-clamp-1 flex items-center gap-2">
             {title}
@@ -57,6 +92,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               </span>
             )}
           </h3>
+
           {githubLink && (
             <a
               href={githubLink}
@@ -70,12 +106,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           )}
         </div>
 
-        {/* Description */}
         <div className="flex-1 mt-2 space-y-2 text-pretty text-muted-foreground text-sm leading-relaxed">
           <p className="line-clamp-3">{description}</p>
         </div>
 
-        {/* Technologies */}
         {technologies && technologies.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2 overflow-hidden">
             {technologies.slice(0, 4).map((tech) => (
