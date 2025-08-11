@@ -95,7 +95,7 @@ export default function Home() {
             <p>
               Picking projects can take me ages, but breaking them should count
               as a hobby. When I&apos;m not breaking production, you&apos;ll
-              find me you’ll usually find me{" "}
+              find me{" "}
               <span className="font-semibold">reading articles</span>,{" "}
               <span className="font-semibold">listening to music</span>, or{" "}
               <span className="font-semibold hover:text-primary transition-colors">
