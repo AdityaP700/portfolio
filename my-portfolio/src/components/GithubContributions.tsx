@@ -40,7 +40,7 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
   const [selectedYear, setSelectedYear] = useState<number>(currentYear);
 
   // Years to display
-  const years = [currentYear, currentYear - 1, currentYear - 2, currentYear - 3];
+  const years = [currentYear, currentYear - 1, currentYear - 2];
 
   // Default themes (light/dark arrays). Each array has 5 colors (maxLevel 4 = 5 shades).
   const defaultTheme: ThemeInput = {
