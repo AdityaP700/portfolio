@@ -24,7 +24,7 @@ export const FinalCTA = () => {
         </Button>
         <Button asChild variant="secondary">
           <a
-            href="/Aditya_Resume.pdf"
+            href="/Aditya_resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
           >
