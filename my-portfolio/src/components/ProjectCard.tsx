@@ -72,57 +72,60 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <motion.div
-      whileHover={{ y: -4, boxShadow: "0px 6px 20px rgba(0,0,0,0.15)" }}
-      transition={{ duration: 0.25 }}
-      className="flex h-48 w-full overflow-hidden rounded-xl border border-border bg-card"
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ duration: 0.35, ease: [0.4,0.1,0.2,1] }}
+      className="group relative flex h-44 w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_2px_12px_-2px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)]"
     >
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_60%)]" />
       <LeftWrapper>
-        <div className="flex items-center justify-center w-[160px] h-[160px]">
-          <PixelImage src={image} alt={title} className="object-contain w-full h-full" />
+        <div className="flex items-center justify-center w-[160px] h-[160px] p-3">
+          <PixelImage
+            src={image}
+            alt={title}
+            className="object-contain w-full h-full drop-shadow-[0_4px_10px_rgba(0,0,0,0.35)]"
+          />
         </div>
       </LeftWrapper>
 
-      <CardSpotlight className="flex flex-1 flex-col justify-between p-4 min-w-0 rounded-none border-none bg-transparent">
-        <div className="flex items-start justify-between gap-2 relative z-10">
-          <h3 className="text-l font-semibold text-foreground line-clamp-1 flex items-center gap-2">
+      <CardSpotlight className="relative flex flex-1 flex-col justify-between py-3 pr-4 pl-5 min-w-0 rounded-none border-none bg-transparent">
+        <div className="flex items-start justify-between gap-3 relative z-10">
+          <h3 className="text-[0.95rem] font-semibold tracking-tight text-white line-clamp-1 flex items-center gap-2">
             {title}
             {isLive && (
-              <span className="inline-flex items-center gap-1 text-sm font-medium text-green-500">
-                <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="inline-flex items-center gap-1 text-[0.55rem] font-medium text-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                LIVE
               </span>
             )}
           </h3>
-
           {githubLink && (
             <a
               href={githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+              className="flex-shrink-0 text-white/30 hover:text-white/80 transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
-              <Github size={20} />
+              <Github size={18} />
             </a>
           )}
         </div>
-
-        <div className="flex-1 mt-2 space-y-2 text-pretty text-muted-foreground text-sm leading-relaxed">
-          <p className="line-clamp-3">{description}</p>
-        </div>
-
+        <p className="mt-1.5 text-[0.68rem] leading-relaxed text-white/55 line-clamp-2">
+          {description}
+        </p>
         {technologies && technologies.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2 overflow-hidden">
-            {technologies.slice(0, 4).map((tech) => (
+          <div className="mt-3 flex flex-wrap gap-1.5 overflow-hidden">
+            {technologies.slice(0, 5).map((tech) => (
               <span
                 key={tech}
-                className="inline-block rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground whitespace-nowrap"
+                className="inline-block rounded-full bg-white/6 backdrop-blur-sm border border-white/10 px-2 py-0.5 text-[0.55rem] font-medium tracking-wide text-white/70 whitespace-nowrap hover:bg-white/10 transition-colors"
               >
                 {tech}
               </span>
             ))}
-            {technologies.length > 4 && (
-              <span className="inline-block rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                +{technologies.length - 4}
+            {technologies.length > 5 && (
+              <span className="inline-block rounded-full bg-white/6 backdrop-blur-sm border border-white/10 px-2 py-0.5 text-[0.55rem] font-medium tracking-wide text-white/70">
+                +{technologies.length - 5}
               </span>
             )}
           </div>

@@ -21,7 +21,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-black`}>
+        {/* Enhanced Background */}
+        <div className="fixed inset-0 z-[-1] bg-black">
+          <div
+            className="absolute inset-0 z-[-1]"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 50%, rgba(120, 119, 198, 0.1), transparent 70%)",
+            }}
+          />
+          <div
+            className="absolute top-0 left-0 w-full h-full z-[-1]"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(226, 232, 240, 0.1), transparent 70%)",
+            }}
+          />
+        </div>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

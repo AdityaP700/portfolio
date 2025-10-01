@@ -55,34 +55,35 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
 };
 
   return (
-    <Card className="border-border/60">
-      <CardHeader>
-        <CardTitle>My GitHub Activity</CardTitle>
-        <CardDescription>Proof I actually code (sometimes)</CardDescription>
+    <Card className="border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,0.04)] relative overflow-hidden group">
+      <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <CardHeader className="relative z-10 pb-4">
+        <CardTitle className="text-sm font-semibold tracking-wide">My GitHub Activity</CardTitle>
+        <CardDescription className="text-[0.7rem]">Proof I actually code (sometimes)</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative z-10 pt-0">
         <TooltipProvider>
           <div className="max-w-full overflow-hidden">
             <GitHubCalendar
               username={username}
-              year={selectedYear} // IMPORTANT: pass number, not string
-              blockSize={12}
-              blockMargin={2}
-              fontSize={12}
+              year={selectedYear}
+              blockSize={11}
+              blockMargin={3}
+              fontSize={10}
               showWeekdayLabels={false}
-              // Pass the light/dark arrays as the library/type expects
-              theme={themeToUse} // cast only if TS complains about exact type shape
-              // If your installed types accept maxLevel, forward it — otherwise remove
+              theme={themeToUse}
               maxLevel={maxLevel}
             />
           </div>
         </TooltipProvider>
       </CardContent>
-      <CardFooter className="flex justify-center items-center gap-2">
+      <CardFooter className="relative z-10 justify-center gap-2 pt-4">
         {years.map((year) => (
           <Button
             key={year}
-            variant={selectedYear === year ? "default" : "outline"}
+            size="sm"
+            variant={selectedYear === year ? "default" : "ghost"}
+            className={`h-7 px-3 rounded-full text-[0.65rem] font-medium tracking-wide transition-colors ${selectedYear === year ? 'shadow-[0_0_0_1px_rgba(255,255,255,0.15)]' : 'bg-white/0 hover:bg-white/10'}`}
             onClick={() => setSelectedYear(year)}
           >
             {year}

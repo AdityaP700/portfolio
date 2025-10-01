@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 
 function PixelatedClock() {
   const [time, setTime] = useState('');
-  
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -11,19 +10,19 @@ function PixelatedClock() {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false,
-        timeZoneName: 'short',
+        timeZoneName: 'short'
       };
-      const timeString = now.toLocaleTimeString([], options);
-      setTime(timeString);
+      setTime(now.toLocaleTimeString([], options).replace(/:([^:]*)$/, '<span class="opacity-50">:$1</span>'));
     };
-
     updateTime();
-    const timerId = setInterval(updateTime, 1000);
-
-    return () => clearInterval(timerId);
+    const id = setInterval(updateTime, 1000);
+    return () => clearInterval(id);
   }, []);
-
-return <div className="pixelated-font text-sm mt-2">{time}</div>;
+  return (
+    <div
+      className="font-mono text-[0.65rem] tracking-[0.15em] font-medium text-white/80 tabular-nums select-none leading-none"
+      dangerouslySetInnerHTML={{ __html: time }}
+    />
+  );
 }
-
 export default PixelatedClock;
