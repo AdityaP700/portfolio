@@ -8,15 +8,17 @@ export type ProjectType = {
   githubLink?: string;
   isLive?: boolean;
   category?: string; // Added optional category for grouping (e.g., 'Web3', 'Web App')
+  isFeatured?: boolean; // Identifies the main case study project for special treatment
 };
 
-// Updated projects list per latest curation:
+// Updated projects list with storytelling-driven descriptions
 export const projects: ProjectType[] = [
   {
     title: "SplitMate",
     category: "Web3",
+    isFeatured: true, // Main case study project
     description:
-      "A bill-splitting app revolutionizing shared expenses with blockchain technology, real-time messaging, and AI-powered intelligence for transparent and secure payments.",
+      "Engineered a real-time, on-chain bill-splitting dApp. Solved for payment transparency and security using Solana smart contracts, a real-time messaging layer with Socket.io, and AI-powered validation to ensure accurate expense tracking.",
     technologies: [
       "React",
       "Node.js",
@@ -34,8 +36,8 @@ export const projects: ProjectType[] = [
     title: "OSINT Hub",
     category: "Web App",
     description:
-      "A collaborative platform for cybersecurity analysts, journalists, and OSINT researchers to investigate, document, and refine intelligence in a secure, version-controlled environment. Uses AI to validate merge requests and assess credibility before acceptance.",
-    technologies: ["TBA"],
+      "Building a collaborative intelligence platform for cybersecurity analysts and OSINT researchers. Implementing version-controlled investigation workflows with LLM-based validation and credibility scoring to ensure data integrity before merge acceptance.",
+    technologies: ["Next.js", "PostgreSQL", "Prisma", "LLM Integration", "Git-like Versioning"],
     image: "/Logo.png", // Placeholder until dedicated asset is available
     link: null,
     githubLink: undefined,
@@ -45,7 +47,7 @@ export const projects: ProjectType[] = [
     title: "SolTask",
     category: "Web3",
     description:
-      "A simple decentralized counter dApp built on Solana. Users can create personal counters, increment or reset them—each counter account tied to their wallet for ownership. Demonstrates PDAs, account creation & state management.",
+      "Built a decentralized counter dApp on Solana to master program-derived addresses (PDAs) and on-chain state management. Each counter is wallet-owned, demonstrating secure account creation and state mutation patterns in Rust with Anchor framework.",
     technologies: ["Solana", "Rust", "Anchor"],
     image: "/Logo.png", // Placeholder (add /SolTask.png when ready)
     link: null,
@@ -56,7 +58,7 @@ export const projects: ProjectType[] = [
     title: "PrivacyGuard",
     category: "ML",
     description:
-      "A Chrome extension protecting users from phishing attacks using on‑device machine learning, heuristic analysis & homograph detection.",
+      "Built a browser shield against phishing attacks. Implemented on-device TensorFlow.js models and heuristic analysis to detect and block threats in real-time without compromising user privacy or requiring server communication.",
     technologies: [
       "JavaScript",
       "TensorFlow.js",

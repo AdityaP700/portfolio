@@ -29,30 +29,51 @@ export type Skill = {
   icon: React.ComponentType<SVGProps<SVGSVGElement>>;
 };
 
-export const coreSkills: Skill[] = [
+// NEW CATEGORIES - Storytelling Architecture
+
+// The battle-tested tools you use to ship robust products
+export const coreToolkit: Skill[] = [
   { name: "TypeScript", icon: TypescriptIcon },
   { name: "JavaScript", icon: JavascriptIcon },
-  { name: "Python", icon: PythonIcon },
-  { name: "C++", icon: CplusplusIcon },
   { name: "React.js", icon: ReactIcon },
   { name: "Next.js", icon: NextdotJSIcons },
   { name: "Node.js", icon: NodedotjsIcon },
-  { name: "SQL", icon: Database }, 
-  { name: "MongoDB", icon: MongoDBIcons },
+  { name: "Python", icon: PythonIcon },
+  { name: "C++", icon: CplusplusIcon },
   { name: "Prisma", icon: PrismaIcon },
-  { name: "Docker", icon: DockerIcon },
-  { name: "Google Cloud", icon: GoogleCloudIcon },
-  { name: "Vercel", icon: VercelIcon },
-  { name: "Git", icon: GitBranch },
+  { name: "MongoDB", icon: MongoDBIcons },
+  { name: "SQL", icon: Database },
 ];
 
-export const learningSkills: Skill[] = [{ name: "Solana", icon: SolanaIcon }];
-
-export const bonusSkills: Skill[] = [
+// What you're daring to build with - Your focus for the next generation
+export const theFrontier: Skill[] = [
+  { name: "Solana", icon: SolanaIcon },
+  { name: "Machine Learning", icon: BrainCircuit },
   { name: "TensorFlow", icon: TensorFlowIcon },
-  { name: "Machine Learning", icon: BrainCircuit }, 
-  { name: "GenAI", icon: BrainCircuit }, 
-  { name: "StyleGAN", icon: LucideImage }, 
+  { name: "GenAI", icon: BrainCircuit },
+  { name: "StyleGAN", icon: LucideImage },
+];
+
+// How you bring your ideas to the world, reliably
+export const infrastructureAndOps: Skill[] = [
+  { name: "Docker", icon: DockerIcon },
+  { name: "Vercel", icon: VercelIcon },
+  { name: "Google Cloud", icon: GoogleCloudIcon },
+  { name: "Git", icon: GitBranch },
   { name: "GitHub Actions", icon: GithubactionsIcon },
   { name: "Postman", icon: PostmanIcon },
+];
+
+// Curated list for the dynamic tech stack spinner
+export const dynamicSkillsForSpinner: string[] = [
+  "TypeScript",
+  "Next.js",
+  "Solana",
+  "Rust",
+  "Python",
+  "Docker",
+  "TensorFlow",
+  "React",
+  "Machine Learning",
+  "Prisma",
 ];
