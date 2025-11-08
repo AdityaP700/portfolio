@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import { Github, Linkedin, Mail } from "lucide-react";
+import VisitorCounter from "./VisitorCounter";
 
 const XIcon = () => (
   // Simple X icon component
@@ -14,7 +15,10 @@ export const Footer = () => {
   return (
   <footer className="border-t border-border mt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* --- Visitor Counter Placeholder --- */}
+        {/* Visitor Counter */}
+        <div className="flex justify-center mb-8">
+          <VisitorCounter />
+        </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="text-sm text-muted-foreground text-center sm:text-left">

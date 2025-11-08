@@ -1,10 +1,10 @@
 // src/components/ProjectCard.tsx
 "use client";
 
-import Image, { ImageProps } from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
+import { TiltImage } from "@/components/ui/TiltImage";
 import { Github } from "lucide-react";
 
 interface Project {
@@ -21,28 +21,6 @@ interface Project {
 interface ProjectCardProps {
   project: Project;
 }
-
-/**
- * PixelImage: wrapper for next/image.
- * Use Next's ImageProps so TS knows 'src' etc. types.
- * The parent must provide fixed width/height (we use a wrapper div w/ h).
- */
-const PixelImage: React.FC<
-  Pick<ImageProps, "src" | "alt" | "className" | "priority" | "placeholder">
-> = ({ src, alt = "", className, ...props }) => {
-  return (
-    <div className="relative w-[160px] h-[160px]">
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        style={{ objectFit: "contain" }}
-        className={className}
-        {...(props as Omit<ImageProps, "src" | "alt" | "className">)}
-      />
-    </div>
-  );
-};
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const { title, description, technologies, image, link, githubLink, isLive } =
@@ -76,14 +54,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       transition={{ duration: 0.35, ease: [0.4,0.1,0.2,1] }}
       className="group relative flex h-44 w-full overflow-hidden rounded-lg border border-border bg-card backdrop-blur-xl shadow-[0_2px_12px_-2px_rgba(0,0,0,0.4)]"
     >
-      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.04),transparent_60%)] dark:bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_60%)]" />
       <LeftWrapper>
-        <div className="flex items-center justify-center w-[160px] h-[160px] p-3">
-          <PixelImage
-            src={image}
-            alt={title}
-            className="object-contain w-full h-full drop-shadow-[0_4px_10px_rgba(0,0,0,0.35)]"
-          />
+        <div className="flex items-center justify-center w-[160px] h-[160px]">
+          <TiltImage src={image} alt={title} width={140} height={140} />
         </div>
       </LeftWrapper>
 

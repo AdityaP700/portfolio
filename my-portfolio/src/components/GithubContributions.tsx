@@ -16,8 +16,8 @@ import { Button } from "@/components/ui/button";
 type ColorScale = [string, string, string, string, string];
 
 export type ThemeArrays = {
-  light?: string[]; 
-  dark?: string[];  
+  light?: string[];
+  dark?: string[];
 };
 interface ThemeInput {
   light?: ColorScale;
@@ -44,7 +44,7 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
 
   // Default themes (light/dark arrays). Each array has 5 colors (maxLevel 4 = 5 shades).
   const defaultTheme: ThemeInput = {
-  light: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
+  light: ["#f5f3ed", "#ffd97d", "#ffb347", "#ff8c42", "#ff6b35"],
   dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
 };
 
@@ -55,8 +55,8 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
 };
 
   return (
-    <Card className="border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_0_0_1px_rgba(255,255,255,0.04)] relative overflow-hidden group">
-      <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+    <Card className="border-border bg-card backdrop-blur-xl shadow-[0_0_0_1px_rgba(0,0,0,0.04)] relative overflow-hidden group">
+      <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-foreground/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
       <CardHeader className="relative z-10 pb-4">
         <CardTitle className="text-sm font-semibold tracking-wide">My GitHub Activity</CardTitle>
         <CardDescription className="text-[0.7rem]">Proof I actually code (sometimes)</CardDescription>
@@ -83,7 +83,7 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
             key={year}
             size="sm"
             variant={selectedYear === year ? "default" : "ghost"}
-            className={`h-7 px-3 rounded-full text-[0.65rem] font-medium tracking-wide transition-colors ${selectedYear === year ? 'shadow-[0_0_0_1px_rgba(255,255,255,0.15)]' : 'bg-white/0 hover:bg-white/10'}`}
+            className={`h-7 px-3 rounded-full text-[0.65rem] font-medium tracking-wide transition-colors ${selectedYear === year ? 'shadow-[0_0_0_1px_rgba(0,0,0,0.15)]' : 'bg-foreground/0 hover:bg-foreground/10'}`}
             onClick={() => setSelectedYear(year)}
           >
             {year}
