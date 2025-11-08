@@ -18,13 +18,13 @@ export default function ProjectsSection({ showTitle = true }: ProjectsSectionPro
   return (
     <section className="space-y-6">
       {showTitle && (
-        <h2 className="font-bold text-center sm:text-left text-base text-white tracking-wide">
+        <h2 className="font-bold text-center sm:text-left text-base text-foreground tracking-wide">
           Proof of Work
         </h2>
       )}
 
       {/* Filter Bar */}
-  <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {categories.map((cat) => {
           const active = selected === cat;
           return (
@@ -34,8 +34,8 @@ export default function ProjectsSection({ showTitle = true }: ProjectsSectionPro
               className={
                 "px-3 py-1.5 rounded-full text-xs font-medium transition-colors border " +
                 (active
-                  ? "bg-white/15 text-white border-white/20"
-                  : "bg-white/5 text-white/70 hover:text-white hover:bg-white/10 border-white/10")
+                  ? "bg-foreground/15 text-foreground border-border"
+                  : "bg-card text-foreground/70 hover:text-foreground hover:bg-foreground/10 border-border")
               }
               aria-pressed={active}
             >
@@ -45,12 +45,18 @@ export default function ProjectsSection({ showTitle = true }: ProjectsSectionPro
         })}
       </div>
 
-      {/* Projects List */}
-      <div className="flex flex-col gap-4">
-        {filtered.map((project) => (
-          <ProjectCard key={project.title} project={project} />
-        ))}
-      </div>
+      {/* Projects List - only render if there are projects */}
+      {filtered.length > 0 ? (
+        <div className="flex flex-col gap-4">
+          {filtered.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </div>
+      ) : (
+        <div className="py-8 text-center text-foreground/40 text-sm">
+          No projects found in this category.
+        </div>
+      )}
     </section>
   );
 }

@@ -74,7 +74,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <motion.div
       whileHover={{ y: -6, scale: 1.01 }}
       transition={{ duration: 0.35, ease: [0.4,0.1,0.2,1] }}
-      className="group relative flex h-44 w-full overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_2px_12px_-2px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)]"
+      className="group relative flex h-44 w-full overflow-hidden rounded-lg border border-border bg-card backdrop-blur-xl shadow-[0_2px_12px_-2px_rgba(0,0,0,0.4)]"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_60%)]" />
       <LeftWrapper>
@@ -89,7 +89,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       <CardSpotlight className="relative flex flex-1 flex-col justify-between py-3 pr-4 pl-5 min-w-0 rounded-none border-none bg-transparent">
         <div className="flex items-start justify-between gap-3 relative z-10">
-          <h3 className="text-[0.95rem] font-semibold tracking-tight text-white line-clamp-1 flex items-center gap-2">
+          <h3 className="text-[0.95rem] font-semibold tracking-tight text-foreground line-clamp-1 flex items-center gap-2">
             {title}
             {isLive && (
               <span className="inline-flex items-center gap-1 text-[0.55rem] font-medium text-emerald-300">
@@ -103,14 +103,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               href={githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 text-white/30 hover:text-white/80 transition-colors"
+              className="flex-shrink-0 text-foreground/30 hover:text-foreground/80 transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
               <Github size={18} />
             </a>
           )}
         </div>
-        <p className="mt-1.5 text-[0.68rem] leading-relaxed text-white/55 line-clamp-2">
+        <p className="mt-1.5 text-[0.68rem] leading-relaxed text-foreground/55 line-clamp-2">
           {description}
         </p>
         {technologies && technologies.length > 0 && (
@@ -118,13 +118,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {technologies.slice(0, 5).map((tech) => (
               <span
                 key={tech}
-                className="inline-block rounded-full bg-white/6 backdrop-blur-sm border border-white/10 px-2 py-0.5 text-[0.55rem] font-medium tracking-wide text-white/70 whitespace-nowrap hover:bg-white/10 transition-colors"
+                className="inline-block rounded-full bg-foreground/6 backdrop-blur-sm border border-border px-2 py-0.5 text-[0.55rem] font-medium tracking-wide text-foreground/70 whitespace-nowrap hover:bg-foreground/10 transition-colors"
               >
                 {tech}
               </span>
             ))}
             {technologies.length > 5 && (
-              <span className="inline-block rounded-full bg-white/6 backdrop-blur-sm border border-white/10 px-2 py-0.5 text-[0.55rem] font-medium tracking-wide text-white/70">
+              <span className="inline-block rounded-full bg-foreground/6 backdrop-blur-sm border border-border px-2 py-0.5 text-[0.55rem] font-medium tracking-wide text-foreground/70">
                 +{technologies.length - 5}
               </span>
             )}

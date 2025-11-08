@@ -74,11 +74,11 @@ export const PixelImage = ({
     const startTimeout = setTimeout(() => {
       setIsVisible(true);
     }, 50);
-    
+
     const colorTimeout = setTimeout(() => {
       setShowColor(true);
     }, colorRevealDelay + 50);
-    
+
     return () => {
       clearTimeout(startTimeout);
       clearTimeout(colorTimeout);
@@ -143,7 +143,7 @@ export const PixelImage = ({
       {showReplayButton && (
         <button
           onClick={resetAnimation}
-          className="absolute top-2 right-2 z-10 rounded-lg bg-black/50 px-3 py-1 text-xs text-white backdrop-blur-sm transition-opacity hover:bg-black/70"
+          className="absolute top-2 right-2 z-10 rounded-lg bg-black/50 px-3 py-1 text-xs text-foreground backdrop-blur-sm transition-opacity hover:bg-black/70"
         >
           Replay
         </button>

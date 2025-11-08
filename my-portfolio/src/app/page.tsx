@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { ExternalLink } from "lucide-react";
 import AnimatedName from "@/components/ui/AnimatedText";
 import { motion, AnimatePresence } from "framer-motion";
 // Home view will be inlined for a more professional narrative
@@ -17,17 +16,19 @@ import { GitHubContributions } from "@/components/GithubContributions";
 import WorkExperience from "@/components/WorkExperience";
 import LiveCommitFeed from "@/components/LiveCommitFeed";
 import TechStackMarquee from "@/components/TechStackMarquee";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   const [activeView, setActiveView] = useState('home');
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-lg py-1 px-6 flex justify-between items-center text-white text-base sm:text-sm select-none border-b border-white/10">
+      <header className="sticky top-0 z-50 bg-background/50 backdrop-blur-lg py-1 px-6 flex justify-between items-center text-theme-primary text-base sm:text-sm select-none border-b border-border">
         <div className="text-[0.55rem] tracking-tight opacity-80">
           <PixelatedClock />
         </div>
-        <div>
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
           <LocationWeather />
         </div>
       </header>
@@ -43,35 +44,27 @@ export default function Home() {
                 width={96}
                 height={96}
                 priority
-                className="rounded-full border-2 border-white/20 shadow-lg group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105"
+                className="rounded-full border-2 border-border shadow-lg group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
-            {/* Animated Name & Handle */}
+            {/* Name & Handle */}
             <div className="flex flex-col items-center space-y-1">
               <AnimatedName />
-              <a
-                href="https://x.com/AdityaPat_"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-white transition-all duration-200 group/link"
-              >
-                @AdityaPat_
-                <ExternalLink className="w-3 h-3 opacity-0 group-hover/link:opacity-100 transition-all duration-200 transform group-hover/link:translate-x-0.5" />
-              </a>
             </div>
           </section>
 
           {/* Narrative Bio */}
           <section className="mt-8">
             {/* --- THE NEW, HUMANISTIC BIO --- */}
-            <div className="text-pretty text-[0.95rem] leading-relaxed text-white/80 max-w-xl mx-auto text-center md:text-left">
+            <div className="text-pretty text-[0.95rem] leading-relaxed text-foreground/80 max-w-xl mx-auto text-center md:text-left">
               <p className="mb-4">
-                I&apos;m Aditya, a 20-year-old builder who&apos;s fundamentally curious. Most days, you&apos;ll find me chasing an idea down a rabbit hole, reverse-engineering something I probably shouldn&apos;t, or wrestling with a complex system until it finally clicks.
+                I&apos;m a 20 yo builder who&apos;s fundamentally curious. Most days, you&apos;ll find me chasing an idea down a rabbit hole, reverse-engineering something I probably shouldn&apos;t, or wrestling with a complex system until it finally clicks.
               </p>
               <p>
-                That&apos;s my entire playbook, really. It&apos;s how I&apos;ve approached the competitive thrill of hackathons—leading to wins at <span className="font-semibold text-white">Devpost</span> and top finishes at events by <span className="font-semibold text-white">IIT Kharagpur &amp; Bombay</span>. It&apos;s the same drive that had me shipping a dApp on the Solana mainnet, just to understand the nuts and bolts of the chain. Currently, that curiosity has me pointed squarely at the decentralized web.
+                That&apos;s my entire playbook, really. It&apos;s how I&apos;ve approached the competitive thrill of hackathons,leading to wins at <span className="font-semibold text-foreground">Devpost</span> and top finishes at events by <span className="font-semibold text-foreground">
+                  IIT Kharagpur &amp; Bombay</span>. It&apos;s the same drive that had me shipping a dApp on the Solana mainnet, just to understand the nuts and bolts of the chain. Currently, that curiosity has me pointed squarely at the decentralized web.
               </p>
             </div>
           </section>
@@ -83,13 +76,13 @@ export default function Home() {
           {/* --- END: THE NEW CORE IDENTITY BLOCK --- */}
 
           {/* --- NEW: VISUAL SEPARATOR --- */}
-          <hr className="my-12 border-white/10" />
+          <hr className="my-12 border-border" />
 
           {/* --- NEW HOME HUB NAVIGATION --- */}
-          <nav className="flex justify-center gap-8 border-b border-white/10">
+          <nav className="flex justify-center gap-8 border-b border-border">
             <button
               onClick={() => setActiveView('home')}
-              className="relative py-4 text-sm font-medium text-white/60 hover:text-white transition-colors"
+              className="relative py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
             >
               Home
               {activeView === 'home' && (
@@ -102,7 +95,7 @@ export default function Home() {
             </button>
             <button
               onClick={() => setActiveView('projects')}
-              className="relative py-4 text-sm font-medium text-white/60 hover:text-white transition-colors"
+              className="relative py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
             >
               Projects
               {activeView === 'projects' && (
@@ -115,7 +108,7 @@ export default function Home() {
             </button>
             <button
               onClick={() => setActiveView('blogs')}
-              className="relative py-4 text-sm font-medium text-white/60 hover:text-white transition-colors"
+              className="relative py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
             >
               Blogs
               {activeView === 'blogs' && (
@@ -130,7 +123,6 @@ export default function Home() {
 
           {/* --- DYNAMIC CONTENT PANE --- */}
           <div className="w-full min-h-[600px]">
-
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeView}
@@ -138,18 +130,19 @@ export default function Home() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -10, opacity: 0 }}
                 transition={{ duration: 0.2 }}
+                className="pt-8"
               >
                 {activeView === 'home' && (
                   <div className="space-y-14">
                     {/* --- 1. WORK EXPERIENCE (moved above featured) --- */}
                     <section className="space-y-6">
-                      <h2 className="text-base font-semibold tracking-wide text-white mb-2">Work Experience</h2>
+                      <h2 className="text-base font-semibold tracking-wide text-foreground mb-2">Work Experience</h2>
                       <WorkExperience />
                     </section>
 
                     {/* --- 2. FEATURED PROJECTS --- */}
                     <section className="space-y-6">
-                      <h2 className="text-base font-semibold tracking-wide text-white mb-2">Featured Projects</h2>
+                      <h2 className="text-base font-semibold tracking-wide text-foreground mb-2">Featured Projects</h2>
                       <div className="flex flex-col gap-4">
                         {projects.filter((p) => p.isFeatured).map((project) => (
                           <ProjectCard key={project.title} project={project} />
@@ -159,12 +152,12 @@ export default function Home() {
 
                     {/* --- 3. LIVE ACTIVITY --- */}
                     <section className="space-y-6">
-                      <h2 className="text-base font-semibold tracking-wide text-white mb-2">Live Activity</h2>
+                      <h2 className="text-base font-semibold tracking-wide text-foreground mb-2">Live Activity</h2>
                       <LiveCommitFeed />
                       <div className="mt-4">
                       <GitHubContributions
                         theme={{
-                          light: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
+                          light: ["#f5f3ed", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
                           dark: [
                             "rgba(255, 255, 255, 0.05)",
                             "#0e4429",
@@ -176,7 +169,7 @@ export default function Home() {
                         maxLevel={4}
                       />
                       </div>
-                      <p className="text-sm text-white/60 leading-relaxed">
+                      <p className="text-sm text-foreground/60 leading-relaxed">
                         Consistency is key. I build regularly, learn in public, and ship when it matters.
                       </p>
                     </section>

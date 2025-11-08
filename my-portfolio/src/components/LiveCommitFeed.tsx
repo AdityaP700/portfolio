@@ -82,16 +82,16 @@ const LiveCommitFeed: React.FC = () => {
   const today = new Date();
 
   if (!items) {
-    return <p className="text-sm text-white/40">Loading recent activity…</p>;
+    return <p className="text-sm text-foreground/40">Loading recent activity…</p>;
   }
 
   if (items.length === 0) {
-    return <p className="text-sm text-white/40">No recent public contributions found.</p>;
+    return <p className="text-sm text-foreground/40">No recent public contributions found.</p>;
   }
 
   return (
     <div>
-      <h3 className="text-sm font-medium text-white/50 mb-4">
+      <h3 className="text-sm font-medium text-foreground/50 mb-4">
         Recent Contributions • {formatDate(today, "header")}
       </h3>
       <div className="space-y-2">
@@ -101,21 +101,21 @@ const LiveCommitFeed: React.FC = () => {
             key={index}
             target="_blank"
             rel="noopener noreferrer"
-            className="block p-4 bg-transparent border border-white/10 rounded-lg hover:bg-white/5 transition-colors group"
+            className="block p-4 bg-transparent border border-border rounded-lg hover:bg-foreground/5 transition-colors group"
           >
             <div className="flex justify-between items-center gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-white/90 truncate group-hover:text-white">
+                <p className="text-sm text-foreground/90 truncate group-hover:text-foreground">
                   {item.title}
                 </p>
-                <p className="text-xs text-white/50 mt-1">
+                <p className="text-xs text-foreground/50 mt-1">
                   {item.type === "Commit" ? "Committed to" : "Contributed to"} {item.repo}
                 </p>
               </div>
               <div className="flex items-center gap-4 ml-4">
-                <span className="text-xs text-white/40">{formatDate(new Date(item.timestamp), "year")}</span>
-                <div className="p-2 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
-                  <ArrowUpRight className="h-4 w-4 text-white/60" />
+                <span className="text-xs text-foreground/40">{formatDate(new Date(item.timestamp), "year")}</span>
+                <div className="p-2 rounded-full bg-foreground/5 group-hover:bg-foreground/10 transition-colors">
+                  <ArrowUpRight className="h-4 w-4 text-foreground/60" />
                 </div>
               </div>
             </div>

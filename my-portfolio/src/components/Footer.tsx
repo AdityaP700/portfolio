@@ -12,7 +12,7 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-  <footer className="border-t border-white/10 mt-20">
+  <footer className="border-t border-border mt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* --- Visitor Counter Placeholder --- */}
 

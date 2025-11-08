@@ -37,7 +37,7 @@ export default function WritingsSection({ limit, showTitle = true }: WritingsSec
   return (
     <section className="space-y-6">
       {showTitle && (
-        <h2 className="font-bold text-center sm:text-left text-base text-white tracking-wide">
+        <h2 className="font-bold text-center sm:text-left text-base text-foreground tracking-wide">
           Writings & Thoughts
         </h2>
       )}
@@ -46,16 +46,16 @@ export default function WritingsSection({ limit, showTitle = true }: WritingsSec
           <a
             key={index}
             href={writing.url}
-            className="group block p-6 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1"
+            className="group block p-6 bg-card border border-border rounded-xl hover:bg-foreground/5 hover:border-foreground/20 transition-all duration-300 hover:-translate-y-1"
           >
             <div className="space-y-3">
               <div className="flex items-start justify-between gap-4">
-                <h3 className="text-base font-semibold text-white group-hover:text-emerald-300 transition-colors">
+                <h3 className="text-base font-semibold text-foreground group-hover:text-emerald-300 transition-colors">
                   {writing.title}
                 </h3>
-                <ExternalLink className="w-4 h-4 text-white/40 group-hover:text-white/70 transition-colors flex-shrink-0 mt-1" />
+                <ExternalLink className="w-4 h-4 text-foreground/40 group-hover:text-foreground/70 transition-colors flex-shrink-0 mt-1" />
               </div>
-              <p className="text-sm text-white/60 leading-relaxed">
+              <p className="text-sm text-foreground/60 leading-relaxed">
                 {writing.description}
               </p>
               <div className="flex items-center justify-between">
@@ -63,20 +63,20 @@ export default function WritingsSection({ limit, showTitle = true }: WritingsSec
                   {writing.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="text-xs px-2 py-1 bg-white/5 border border-white/10 rounded-md text-white/50"
+                      className="text-xs px-2 py-1 bg-foreground/5 border border-border rounded-md text-foreground/50"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                <span className="text-xs text-white/40">{writing.date}</span>
+                <span className="text-xs text-foreground/40">{writing.date}</span>
               </div>
             </div>
           </a>
         ))}
       </div>
       {!limit && (
-        <p className="text-center text-sm text-white/40 italic pt-4">
+        <p className="text-center text-sm text-foreground/40 italic pt-4">
           More writings coming soon. Building in public, one post at a time.
         </p>
       )}

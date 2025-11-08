@@ -3,7 +3,7 @@ import { GitHubContributions } from "@/components/GithubContributions";
 export default function ActivitySection() {
   return (
     <section className="space-y-6">
-      <h2 className="font-bold text-center sm:text-left text-base text-white tracking-wide">
+      <h2 className="font-bold text-center sm:text-left text-base text-foreground tracking-wide">
         GitHub Activity
       </h2>
       <GitHubContributions
@@ -20,11 +20,11 @@ export default function ActivitySection() {
         maxLevel={4}
       />
       <div className="pt-4 space-y-3">
-        <p className="text-sm text-white/60 leading-relaxed">
+        <p className="text-sm text-foreground/60 leading-relaxed">
           Consistency is key. I believe in building regularly, learning in public,
           and contributing to open source when a problem feels real enough to solve.
         </p>
-        <div className="flex flex-wrap gap-4 text-xs text-white/40">
+        <div className="flex flex-wrap gap-4 text-xs text-foreground/40">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-[#39d353] rounded-sm"></div>
             <span>High Activity</span>

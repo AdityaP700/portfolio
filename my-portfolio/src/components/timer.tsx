@@ -20,7 +20,7 @@ function PixelatedClock() {
   }, []);
   return (
     <div
-      className="font-mono text-[0.65rem] tracking-[0.15em] font-medium text-white/80 tabular-nums select-none leading-none"
+      className="font-mono text-[0.65rem] tracking-[0.15em] font-medium text-foreground/80 tabular-nums select-none leading-none"
       dangerouslySetInnerHTML={{ __html: time }}
     />
   );

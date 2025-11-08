@@ -15,7 +15,7 @@ export default function DynamicTechStack() {
 
   return (
     <div className="inline-flex items-center justify-center text-sm sm:text-base">
-      <span className="mr-2 text-white/70">I build with</span>
+      <span className="mr-2 text-foreground/70">I build with</span>
       <AnimatePresence mode="wait">
         <motion.span
           key={dynamicSkillsForSpinner[index]}
@@ -23,7 +23,7 @@ export default function DynamicTechStack() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 10, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="font-semibold text-white min-w-[120px] text-left"
+          className="font-semibold text-foreground min-w-[120px] text-left"
         >
           {dynamicSkillsForSpinner[index]}
         </motion.span>

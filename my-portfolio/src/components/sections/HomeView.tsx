@@ -11,7 +11,7 @@ export default function HomeView() {
     <div className="space-y-16">
       {/* Featured Projects Section */}
       <section className="space-y-8">
-        <h2 className="text-base font-semibold tracking-wide text-white">
+        <h2 className="text-base font-semibold tracking-wide text-foreground">
           Featured Projects
         </h2>
         <div className="flex flex-col gap-4">
@@ -23,7 +23,7 @@ export default function HomeView() {
 
       {/* GitHub Activity Section - Always Visible */}
       <section className="space-y-6">
-        <h2 className="text-base font-semibold tracking-wide text-white">
+        <h2 className="text-base font-semibold tracking-wide text-foreground">
           GitHub Activity
         </h2>
         <GitHubContributions
@@ -40,7 +40,7 @@ export default function HomeView() {
           maxLevel={4}
         />
         <div className="pt-4">
-          <p className="text-sm text-white/60 leading-relaxed">
+          <p className="text-sm text-foreground/60 leading-relaxed">
             Consistency is key. I believe in building regularly, learning in public,
             and contributing to open source when a problem feels real enough to solve.
           </p>
@@ -49,7 +49,7 @@ export default function HomeView() {
 
       {/* Latest Writings Section */}
       <section className="space-y-8">
-        <h2 className="text-base font-semibold tracking-wide text-white">
+        <h2 className="text-base font-semibold tracking-wide text-foreground">
           Latest Writings
         </h2>
         <WritingsSection limit={2} />

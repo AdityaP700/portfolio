@@ -17,7 +17,7 @@ export default function TechStackCarousel() {
   const Icon = Current.icon as any;
 
   return (
-    <div className="flex justify-center items-center text-sm text-white/60">
+    <div className="flex justify-center items-center text-sm text-foreground/60">
       <span className="mr-3">I build with</span>
       <AnimatePresence mode="wait">
         <motion.div
@@ -28,8 +28,8 @@ export default function TechStackCarousel() {
           transition={{ duration: 0.25 }}
           className="flex items-center gap-2"
         >
-          <Icon className="h-6 w-6 text-white/80" />
-          <span className="font-semibold text-white">{Current.name}</span>
+          <Icon className="h-6 w-6 text-foreground/80" />
+          <span className="font-semibold text-foreground">{Current.name}</span>
         </motion.div>
       </AnimatePresence>
     </div>

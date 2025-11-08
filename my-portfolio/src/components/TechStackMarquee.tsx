@@ -15,7 +15,7 @@ function Row({ items, direction = "left", speed = 30 }: { items: Skill[]; direct
         return (
           <div
             key={`${skill.name}-${idx}`}
-            className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-white/80 text-[0.9rem] transition-colors"
+            className="flex items-center gap-2 px-3 py-2 rounded-full bg-foreground/[0.06] hover:bg-foreground/[0.1] border border-border text-foreground/80 text-[0.9rem] transition-colors"
           >
             <span
               className="flex items-center justify-center h-6 w-6 shrink-0 rounded-md"
@@ -47,7 +47,7 @@ function Row({ items, direction = "left", speed = 30 }: { items: Skill[]; direct
           return (
             <div
               key={`dupe-${skill.name}-${idx}`}
-              className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 text-white/80 text-[0.9rem] transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-full bg-foreground/[0.06] hover:bg-foreground/[0.1] border border-border text-foreground/80 text-[0.9rem] transition-colors"
             >
               <span
                 className="flex items-center justify-center h-6 w-6 shrink-0 rounded-md"
@@ -72,7 +72,7 @@ export default function TechStackMarquee() {
 
   return (
     <section className="relative max-w-5xl mx-auto">
-      <h2 className="text-center md:text-left text-sm font-medium text-white/70 mb-4">Tools that I have used</h2>
+      <h2 className="text-center md:text-left text-sm font-medium text-foreground/70 mb-4">Tools that I have used</h2>
       <div className="relative overflow-hidden marquee-mask">
         <div className="flex flex-col gap-4">
           <Row items={top} direction="left" speed={28} />
