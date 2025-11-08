@@ -157,7 +157,8 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    /* Tailwind v4: replace token utilities with concrete values */
+    @apply border-white/10;
   }
   body {
     @apply bg-background text-foreground;
@@ -167,11 +168,49 @@
       rgba(120, 119, 198, 0.15),
       transparent 80%
     );
+      /* Subtle dotted grid overlay for engineered depth */
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.075) 1px, transparent 0);
+      background-size: 22px 22px;
   }
-  
+
   /* Initialize CSS custom properties for mouse position */
   :root {
     --mouse-x: 50%;
     --mouse-y: 50%;
   }
 }
+
+/* Custom text selection highlight (turquoise accent) */
+::selection {
+  background-color: #06b6d4; /* Tailwind cyan-500 vibe */
+  color: #ffffff;
+}
+
+/* Marquee animations */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes fade-in-out {
+  0%, 100% { opacity: 0.25; }
+  20%, 60% { opacity: 1; }
+}
+
+/* Soft gradient mask on edges */
+.marquee-mask:before,
+.marquee-mask:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+.marquee-mask:before { left: 0; background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0)); }
+.marquee-mask:after { right: 0; background: linear-gradient(to left, rgba(0,0,0,0.9), rgba(0,0,0,0)); }

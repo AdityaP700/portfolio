@@ -77,3 +77,15 @@ export const dynamicSkillsForSpinner: string[] = [
   "Machine Learning",
   "Prisma",
 ];
+
+// Dedicated array for visual tech stack carousel
+export const techStackCarousel: Skill[] = [
+  { name: "TypeScript", icon: TypescriptIcon },
+  { name: "React.js", icon: ReactIcon },
+  { name: "Next.js", icon: NextdotJSIcons },
+  { name: "Solana", icon: SolanaIcon },
+  { name: "Python", icon: PythonIcon },
+  { name: "Docker", icon: DockerIcon },
+  { name: "TensorFlow", icon: TensorFlowIcon },
+  { name: "Prisma", icon: PrismaIcon },
+];

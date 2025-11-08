@@ -33,7 +33,7 @@ interface WritingsSectionProps {
 
 export default function WritingsSection({ limit, showTitle = true }: WritingsSectionProps) {
   const displayedWritings = limit ? writings.slice(0, limit) : writings;
-  
+
   return (
     <section className="space-y-6">
       {showTitle && (

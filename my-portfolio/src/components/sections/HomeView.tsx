@@ -6,7 +6,7 @@ import WritingsSection from "./WritingsSection";
 export default function HomeView() {
   // Filter for featured projects
   const featuredProjects = projects.filter(p => p.isFeatured);
-  
+
   return (
     <div className="space-y-16">
       {/* Featured Projects Section */}
@@ -41,7 +41,7 @@ export default function HomeView() {
         />
         <div className="pt-4">
           <p className="text-sm text-white/60 leading-relaxed">
-            Consistency is key. I believe in building regularly, learning in public, 
+            Consistency is key. I believe in building regularly, learning in public,
             and contributing to open source when a problem feels real enough to solve.
           </p>
         </div>

@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} bg-black`}>
         {/* Enhanced Background */}
-        <div className="fixed inset-0 z-[-1] bg-black">
+        <div className="fixed inset-0 z-[-1] bg-black dotted-background">
           <div
             className="absolute inset-0 z-[-1]"
             style={{

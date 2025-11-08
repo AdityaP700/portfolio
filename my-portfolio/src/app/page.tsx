@@ -4,14 +4,19 @@ import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import AnimatedName from "@/components/ui/AnimatedText";
 import { motion, AnimatePresence } from "framer-motion";
-import HomeView from "@/components/sections/HomeView";
+// Home view will be inlined for a more professional narrative
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import WritingsSection from "@/components/sections/WritingsSection";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 import PixelatedClock from "@/components/timer";
 import LocationWeather from "@/components/weather";
-import DynamicTechStack from "@/components/DynamicTechStack";
+import { projects } from "@/lib/projects";
+import ProjectCard from "@/components/ProjectCard";
+import { GitHubContributions } from "@/components/GithubContributions";
+import WorkExperience from "@/components/WorkExperience";
+import LiveCommitFeed from "@/components/LiveCommitFeed";
+import TechStackMarquee from "@/components/TechStackMarquee";
 
 export default function Home() {
   const [activeView, setActiveView] = useState('home');
@@ -28,8 +33,8 @@ export default function Home() {
       </header>
       <main className="flex flex-col items-center p-4 sm:p-8">
         <div className="max-w-2xl w-full">
-          {/* --- START: THE NEW CORE IDENTITY BLOCK --- */}
-          <section className="flex flex-col items-center pt-16 space-y-4 text-center">
+          {/* --- START: CENTERED IDENTITY BLOCK --- */}
+          <section className="flex flex-col items-center pt-12 space-y-4 text-center">
             {/* Profile Picture */}
             <div className="relative group">
               <Image
@@ -59,69 +64,63 @@ export default function Home() {
           </section>
 
           {/* Narrative Bio */}
-          <section className="mt-8 text-pretty text-[0.9rem] sm:text-[0.95rem] leading-relaxed text-center text-white/70 max-w-xl mx-auto">
-            <p>
-              I build insightful, non-trivial products. I&apos;ve shipped a decentralized app on the Solana mainnet, 
-              developed a Chrome extension using on-device ML, and thrive on turning complex problems into elegant 
-              solutions. I&apos;m currently focused on the frontier of the decentralized web.
-            </p>
-          </section>
-
-          {/* NEW: CURRENT WORK EXPERIENCE SECTION */}
-          <section className="mt-8 flex justify-center">
-            <div className="inline-flex items-center gap-4 px-4 py-2 bg-white/5 border border-white/10 rounded-full">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <p className="text-sm text-white/80">
-                Currently Backend Engineer at a stealth startup.
+          <section className="mt-8">
+            {/* --- THE NEW, HUMANISTIC BIO --- */}
+            <div className="text-pretty text-[0.95rem] leading-relaxed text-white/80 max-w-xl mx-auto text-center md:text-left">
+              <p className="mb-4">
+                I&apos;m Aditya, a 20-year-old builder who&apos;s fundamentally curious. Most days, you&apos;ll find me chasing an idea down a rabbit hole, reverse-engineering something I probably shouldn&apos;t, or wrestling with a complex system until it finally clicks.
+              </p>
+              <p>
+                That&apos;s my entire playbook, really. It&apos;s how I&apos;ve approached the competitive thrill of hackathons—leading to wins at <span className="font-semibold text-white">Devpost</span> and top finishes at events by <span className="font-semibold text-white">IIT Kharagpur &amp; Bombay</span>. It&apos;s the same drive that had me shipping a dApp on the Solana mainnet, just to understand the nuts and bolts of the chain. Currently, that curiosity has me pointed squarely at the decentralized web.
               </p>
             </div>
           </section>
 
-          {/* Dynamic Tech Stack */}
-          <section className="mt-4 flex justify-center">
-            <DynamicTechStack />
-          </section>
+          {/* Animated Tech Stack Marquee */}
+          <div className="mt-12">
+            <TechStackMarquee />
+          </div>
           {/* --- END: THE NEW CORE IDENTITY BLOCK --- */}
 
+          {/* --- NEW: VISUAL SEPARATOR --- */}
+          <hr className="my-12 border-white/10" />
+
           {/* --- NEW HOME HUB NAVIGATION --- */}
-          <nav className="flex justify-center gap-8 my-12 border-b border-white/10">
-            <button 
-              onClick={() => setActiveView('home')} 
+          <nav className="flex justify-center gap-8 border-b border-white/10">
+            <button
+              onClick={() => setActiveView('home')}
               className="relative py-4 text-sm font-medium text-white/60 hover:text-white transition-colors"
             >
               Home
               {activeView === 'home' && (
-                <motion.div 
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400" 
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"
                   layoutId="underline"
                   transition={{ duration: 0.3 }}
                 />
               )}
             </button>
-            <button 
-              onClick={() => setActiveView('projects')} 
+            <button
+              onClick={() => setActiveView('projects')}
               className="relative py-4 text-sm font-medium text-white/60 hover:text-white transition-colors"
             >
               Projects
               {activeView === 'projects' && (
-                <motion.div 
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400" 
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"
                   layoutId="underline"
                   transition={{ duration: 0.3 }}
                 />
               )}
             </button>
-            <button 
-              onClick={() => setActiveView('blogs')} 
+            <button
+              onClick={() => setActiveView('blogs')}
               className="relative py-4 text-sm font-medium text-white/60 hover:text-white transition-colors"
             >
               Blogs
               {activeView === 'blogs' && (
-                <motion.div 
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400" 
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"
                   layoutId="underline"
                   transition={{ duration: 0.3 }}
                 />
@@ -131,6 +130,7 @@ export default function Home() {
 
           {/* --- DYNAMIC CONTENT PANE --- */}
           <div className="w-full min-h-[600px]">
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeView}
@@ -139,7 +139,54 @@ export default function Home() {
                 exit={{ y: -10, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                {activeView === 'home' && <HomeView />}
+                {activeView === 'home' && (
+                  <div className="space-y-14">
+                    {/* --- 1. WORK EXPERIENCE (moved above featured) --- */}
+                    <section className="space-y-6">
+                      <h2 className="text-base font-semibold tracking-wide text-white mb-2">Work Experience</h2>
+                      <WorkExperience />
+                    </section>
+
+                    {/* --- 2. FEATURED PROJECTS --- */}
+                    <section className="space-y-6">
+                      <h2 className="text-base font-semibold tracking-wide text-white mb-2">Featured Projects</h2>
+                      <div className="flex flex-col gap-4">
+                        {projects.filter((p) => p.isFeatured).map((project) => (
+                          <ProjectCard key={project.title} project={project} />
+                        ))}
+                      </div>
+                    </section>
+
+                    {/* --- 3. LIVE ACTIVITY --- */}
+                    <section className="space-y-6">
+                      <h2 className="text-base font-semibold tracking-wide text-white mb-2">Live Activity</h2>
+                      <LiveCommitFeed />
+                      <div className="mt-4">
+                      <GitHubContributions
+                        theme={{
+                          light: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
+                          dark: [
+                            "rgba(255, 255, 255, 0.05)",
+                            "#0e4429",
+                            "#006d32",
+                            "#26a641",
+                            "#39d353",
+                          ],
+                        }}
+                        maxLevel={4}
+                      />
+                      </div>
+                      <p className="text-sm text-white/60 leading-relaxed">
+                        Consistency is key. I build regularly, learn in public, and ship when it matters.
+                      </p>
+                    </section>
+
+                    {/* --- 4. LATEST WRITINGS --- */}
+                    <section className="space-y-6">
+                      <WritingsSection limit={3} showTitle={true} />
+                    </section>
+                  </div>
+                )}
                 {activeView === 'projects' && <ProjectsSection showTitle={false} />}
                 {activeView === 'blogs' && <WritingsSection showTitle={false} />}
               </motion.div>

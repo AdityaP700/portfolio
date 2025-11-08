@@ -21,7 +21,7 @@ export default function ActivitySection() {
       />
       <div className="pt-4 space-y-3">
         <p className="text-sm text-white/60 leading-relaxed">
-          Consistency is key. I believe in building regularly, learning in public, 
+          Consistency is key. I believe in building regularly, learning in public,
           and contributing to open source when a problem feels real enough to solve.
         </p>
         <div className="flex flex-wrap gap-4 text-xs text-white/40">
