@@ -42,7 +42,7 @@ export const projects: ProjectType[] = [
       "MongoDB",
       "AI"
     ],
-    image: "/SplitMate1.png",
+  image: "/Splitmate1.png",
     link: "https://split-mate-43.vercel.app/",
     githubLink: "https://github.com/AdityaP700/split-mate",
     isLive: true
@@ -65,7 +65,7 @@ export const projects: ProjectType[] = [
   isFeatured :true,
   description: "Your achievements, forever on the blockchain. Track your milestones with verifiable, permanent records on the Solana network. Your progress, your ownership.\n\nBuilt a dApp on Solana to master program-derived addresses (PDAs) and on-chain state management. Each counter is wallet-owned, demonstrating secure account creation and state mutation patterns in Rust with Anchor framework.",
   technologies: ["Solana", "Rust", "Anchor"],
-  image: "/SolTask.png",
+  image: "/Soltask.png",
   link: "https://program-aditya-p700-gy3v.vercel.app/",
   githubLink: "https://github.com/AdityaP700/program-AdityaP700",
   isLive: true

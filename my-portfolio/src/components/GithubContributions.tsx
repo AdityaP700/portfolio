@@ -1,7 +1,7 @@
 // src/components/GitHubContributions.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { useTheme } from "next-themes";
 import {
@@ -58,6 +58,9 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
     dark: (theme?.dark as ColorScale) ?? defaultTheme.dark,
   };
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <Card className="border-border bg-card backdrop-blur-xl shadow-[0_0_0_1px_rgba(0,0,0,0.04)] relative overflow-hidden group">
       <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-foreground/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -69,17 +72,19 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
         <TooltipProvider>
           <div className="w-full overflow-x-auto overflow-y-hidden -mx-2 px-2 pb-2">
             <div className="min-w-[280px] sm:min-w-0">
-              <GitHubCalendar
-                username={username}
-                year={selectedYear}
-                blockSize={11}
-                blockMargin={3}
-                fontSize={10}
-                showWeekdayLabels={false}
-                theme={themeToUse}
-                colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
-                maxLevel={maxLevel}
-              />
+              {mounted && (
+                <GitHubCalendar
+                  username={username}
+                  year={selectedYear}
+                  blockSize={11}
+                  blockMargin={3}
+                  fontSize={10}
+                  showWeekdayLabels={false}
+                  theme={themeToUse}
+                  colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
+                  maxLevel={maxLevel}
+                />
+              )}
             </div>
           </div>
         </TooltipProvider>
