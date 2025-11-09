@@ -4,7 +4,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
-import { TiltImage } from "@/components/ui/TiltImage";
+import MediaPreview from "@/components/ui/MediaPreview";
 import { Github } from "lucide-react";
 
 interface Project {
@@ -33,16 +33,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         href={link ?? undefined} // ensures href type is string | undefined, not null
         target="_blank"
         rel="noopener noreferrer"
-        className="h-full flex items-center justify-center bg-muted"
-        style={{ width: 160 }}
+        className="h-full w-full md:w-[260px] flex items-center justify-center bg-foreground/5 dark:bg-foreground/10 md:border-r border-border"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
       </a>
     ) : (
       <div
-        className="h-full flex items-center justify-center bg-muted"
-        style={{ width: 160 }}
+        className="h-full w-full md:w-[260px] flex items-center justify-center bg-foreground/5 dark:bg-foreground/10 md:border-r border-border"
       >
         {children}
       </div>
@@ -50,20 +48,27 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <motion.div
-      whileHover={{ y: -6, scale: 1.01 }}
-      transition={{ duration: 0.35, ease: [0.4,0.1,0.2,1] }}
-      className="group relative flex h-44 w-full overflow-hidden rounded-lg border border-border bg-card backdrop-blur-xl shadow-[0_2px_12px_-2px_rgba(0,0,0,0.4)]"
-    >
-      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.04),transparent_60%)] dark:bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_60%)]" />
+      /* Card stays static; only image enlarges */
+      className="group relative flex flex-col md:flex-row h-auto md:h-[180px] w-full overflow-hidden rounded-xl border border-border bg-card backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.03)] transition-colors"
+    style={{ borderRadius: 0 }}>
+<div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-white/1 dark:bg-black/2" />
       <LeftWrapper>
-        <div className="flex items-center justify-center w-[160px] h-[160px]">
-          <TiltImage src={image} alt={title} width={140} height={140} />
+        {/* Overflow hidden so preview zoom stays clipped */}
+        <div className="relative w-full h-[200px] md:h-full overflow-hidden">
+          <div className="h-full w-full origin-center transition-transform duration-500 ease-[cubic-bezier(.4,.1,.2,1)] group-hover:scale-[1.06]">
+            <MediaPreview
+              src={image}
+              alt={title}
+              width={260}
+              height={180}
+            />
+          </div>
         </div>
       </LeftWrapper>
 
-      <CardSpotlight className="relative flex flex-1 flex-col justify-between py-3 pr-4 pl-5 min-w-0 rounded-none border-none bg-transparent">
+      <CardSpotlight className="relative flex flex-1 flex-col justify-between py-4 md:py-3 px-4 md:pr-4 md:pl-5 min-w-0 rounded-none border-none bg-transparent">
         <div className="flex items-start justify-between gap-3 relative z-10">
-          <h3 className="text-[0.95rem] font-semibold tracking-tight text-foreground line-clamp-1 flex items-center gap-2">
+          <h3 className="text-lg md:text-[1.1rem] lg:text-[1.2rem] font-semibold tracking-tight text-foreground line-clamp-1 flex items-center gap-2">
             {title}
             {isLive && (
               <span className="inline-flex items-center gap-1 text-[0.55rem] font-medium text-emerald-300">
@@ -84,7 +89,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </a>
           )}
         </div>
-        <p className="mt-1.5 text-[0.68rem] leading-relaxed text-foreground/55 line-clamp-2">
+        <p className="mt-2 md:mt-1 text-sm md:text-[0.8rem] leading-relaxed text-foreground/65 line-clamp-2 md:line-clamp-2">
           {description}
         </p>
         {technologies && technologies.length > 0 && (

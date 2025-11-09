@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import GitHubCalendar from "react-github-calendar";
+import { useTheme } from "next-themes";
 import {
   Card,
   CardContent,
@@ -34,6 +35,7 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
   theme,
   maxLevel = 4,
 }) => {
+  const { resolvedTheme } = useTheme();
   const currentYear = new Date().getFullYear();
 
   // Selected year state (keep this as number because GitHubCalendar's Year type is numeric)
@@ -44,15 +46,17 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
 
   // Default themes (light/dark arrays). Each array has 5 colors (maxLevel 4 = 5 shades).
   const defaultTheme: ThemeInput = {
-  light: ["#f5f3ed", "#ffd97d", "#ffb347", "#ff8c42", "#ff6b35"],
-  dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-};
+    // Light palette with higher contrast against warm off‑white backgrounds
+    light: ["#e9e5dc", "#ffd76a", "#ffae42", "#ff8c2b", "#f76b15"],
+    // GitHub-like dark palette
+    dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+  };
 
   // Use provided theme or fallback to defaults
   const themeToUse: ThemeInput = {
-  light: theme?.light as ColorScale ?? defaultTheme.light,
-  dark: theme?.dark as ColorScale ?? defaultTheme.dark,
-};
+    light: (theme?.light as ColorScale) ?? defaultTheme.light!,
+    dark: (theme?.dark as ColorScale) ?? defaultTheme.dark,
+  };
 
   return (
     <Card className="border-border bg-card backdrop-blur-xl shadow-[0_0_0_1px_rgba(0,0,0,0.04)] relative overflow-hidden group">
@@ -63,21 +67,34 @@ export const GitHubContributions: React.FC<GitHubContributionsProps> = ({
       </CardHeader>
       <CardContent className="relative z-10 pt-0">
         <TooltipProvider>
-          <div className="max-w-full overflow-hidden">
-            <GitHubCalendar
-              username={username}
-              year={selectedYear}
-              blockSize={11}
-              blockMargin={3}
-              fontSize={10}
-              showWeekdayLabels={false}
-              theme={themeToUse}
-              maxLevel={maxLevel}
-            />
+          <div className="w-full overflow-x-auto overflow-y-hidden -mx-2 px-2 pb-2">
+            <div className="min-w-[280px] sm:min-w-0">
+              <GitHubCalendar
+                username={username}
+                year={selectedYear}
+                blockSize={11}
+                blockMargin={3}
+                fontSize={10}
+                showWeekdayLabels={false}
+                theme={themeToUse}
+                colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
+                maxLevel={maxLevel}
+              />
+            </div>
           </div>
         </TooltipProvider>
       </CardContent>
-      <CardFooter className="relative z-10 justify-center gap-2 pt-4">
+      {/* Subtle strokes around cells for visibility on warm light backgrounds */}
+      <style jsx global>{`
+        .gh-cal rect {
+          stroke: rgba(0, 0, 0, 0.08);
+          stroke-width: 0.5px;
+        }
+        html.dark .gh-cal rect {
+          stroke: rgba(255, 255, 255, 0.08);
+        }
+      `}</style>
+      <CardFooter className="relative z-10 justify-center gap-2 pt-4 flex-wrap">
         {years.map((year) => (
           <Button
             key={year}

@@ -1,29 +1,24 @@
 "use client";
 import { ExternalLink } from "lucide-react";
 
-// Placeholder writings data - you can replace this with actual blog posts
+// Micro–writings: short, formatted thought excerpts (no deep blog feel yet)
+// Keep each entry intentionally concise – can expand later into full posts.
 const writings = [
-  {
-    title: "Building on Solana: Lessons from the Mainnet",
-    description: "What I learned shipping my first decentralized app on the Solana blockchain, from transaction optimization to user experience.",
-    date: "Coming Soon",
-    url: "#",
-    tags: ["Web3", "Solana", "Development"]
-  },
-  {
-    title: "On-Device ML in Chrome Extensions",
-    description: "Exploring the possibilities and constraints of running machine learning models directly in the browser.",
-    date: "Coming Soon",
-    url: "#",
-    tags: ["ML", "Chrome Extensions", "JavaScript"]
-  },
-  {
-    title: "Momentum Over Perfection",
-    description: "Why shipping fast and iterating beats endless planning. My philosophy on building products and learning in public.",
-    date: "Coming Soon",
-    url: "#",
-    tags: ["Philosophy", "Product", "Learning"]
-  }
+  // {
+  //   title: "Momentum Over Perfection",
+  //   // Structured excerpt intentionally preserves markdown bullet/line rhythm via manual line breaks
+  //   excerpt: `Ship → Learn → Repeat.\nPlanning past first useful iteration stalls feedback loops.\nFocus: smallest version that teaches you something today.`,
+  //   date: "Nov 9, 2025",
+  //   tags: ["Philosophy", "Building", "Learning"],
+  //   url: "/blogs/momentum-over-perfection" // still routable, but treated as an excerpt
+  // },
+  // {
+  //   title: "Tiny Surface, Real Signal",
+  //   excerpt: `Release to 5–10 honest users.\nSignal emerges faster than crafting polish for imaginary scale.\nOptimize early for conversations, not conversions.`,
+  //   date: "Nov 9, 2025",
+  //   tags: ["Product", "Early Stage"],
+  //   url: "#" // placeholder until a full article exists
+  // }
 ];
 
 interface WritingsSectionProps {
@@ -35,51 +30,57 @@ export default function WritingsSection({ limit, showTitle = true }: WritingsSec
   const displayedWritings = limit ? writings.slice(0, limit) : writings;
 
   return (
-    <section className="space-y-6">
+    <section className="w-full space-y-6">
       {showTitle && (
-        <h2 className="font-bold text-center sm:text-left text-base text-foreground tracking-wide">
-          Writings & Thoughts
-        </h2>
+        <div className="space-y-1 text-center sm:text-left">
+          <h2 className="text-base font-bold tracking-wide text-foreground">Writings & Thoughts</h2>
+          <p className="text-[11px] tracking-wide text-foreground/50">Short thought drops. Full essays will live here later.</p>
+        </div>
       )}
-      <div className="space-y-4">
-        {displayedWritings.map((writing, index) => (
-          <a
-            key={index}
-            href={writing.url}
-            className="group block p-6 bg-card border border-border rounded-xl hover:bg-foreground/5 hover:border-foreground/20 transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="space-y-3">
+
+      <div className="space-y-3">
+        {displayedWritings.map((w, i) => {
+          const isLinkable = w.url && w.url !== "#";
+          const common = (
+            <>
               <div className="flex items-start justify-between gap-4">
-                <h3 className="text-base font-semibold text-foreground group-hover:text-emerald-300 transition-colors">
-                  {writing.title}
-                </h3>
-                <ExternalLink className="w-4 h-4 text-foreground/40 group-hover:text-foreground/70 transition-colors flex-shrink-0 mt-1" />
-              </div>
-              <p className="text-sm text-foreground/60 leading-relaxed">
-                {writing.description}
-              </p>
-              <div className="flex items-center justify-between">
-                <div className="flex flex-wrap gap-2">
-                  {writing.tags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="text-xs px-2 py-1 bg-foreground/5 border border-border rounded-md text-foreground/50"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="space-y-1.5">
+                  <h3 className="text-sm font-semibold tracking-wide text-foreground/90 group-hover:text-foreground">{w.title}</h3>
+                  <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-foreground/70">{w.excerpt}</pre>
                 </div>
-                <span className="text-xs text-foreground/40">{writing.date}</span>
+                {isLinkable && (
+                  <ExternalLink className="mt-0.5 h-4 w-4 flex-shrink-0 text-foreground/35 group-hover:text-foreground/60" strokeWidth={2} />
+                )}
               </div>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                {w.tags.map((tag, tIndex) => (
+                  <span key={tIndex} className="rounded-md border border-border/50 bg-foreground/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-foreground/50 group-hover:bg-foreground/[0.06]">{tag}</span>
+                ))}
+                <span className="ml-auto text-[10px] font-medium text-foreground/40">{w.date}</span>
+              </div>
+            </>
+          );
+
+          return isLinkable ? (
+            <a
+              key={i}
+              href={w.url}
+              className="group relative block rounded-lg border border-border/60 bg-card/80 backdrop-blur-sm px-4 py-3 shadow-[inset_0_0_0_1px_var(--border)] transition-colors hover:border-foreground/30 hover:bg-card hover:shadow-lg"
+            >
+              {common}
+            </a>
+          ) : (
+            <div
+              key={i}
+              className="group relative block rounded-lg border border-border/60 bg-card/80 backdrop-blur-sm px-4 py-3 shadow-[inset_0_0_0_1px_var(--border)] transition-colors hover:border-foreground/30 hover:bg-card hover:shadow-lg"
+            >
+              {common}
             </div>
-          </a>
-        ))}
+          );
+        })}
       </div>
-      {!limit && (
-        <p className="text-center text-sm text-foreground/40 italic pt-4">
-          More writings coming soon. Building in public, one post at a time.
-        </p>
-      )}
+
+      {/* Footer helper removed to avoid duplication; message moved under title. */}
     </section>
   );
 }

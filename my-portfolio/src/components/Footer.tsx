@@ -1,6 +1,6 @@
 // src/components/Footer.tsx
 import { Github, Linkedin, Mail } from "lucide-react";
-import VisitorCounter from "./VisitorCounter";
+// import VisitorCounter from "./VisitorCounter";
 
 const XIcon = () => (
   // Simple X icon component
@@ -13,15 +13,15 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-  <footer className="border-t border-border mt-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <footer className="border-t border-border mt-20 w-full">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-8 max-w-4xl">
         {/* Visitor Counter */}
-        <div className="flex justify-center mb-8">
-          <VisitorCounter />
+        <div className="flex justify-center mb-6 sm:mb-8">
+          {/* <VisitorCounter /> */}
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-muted-foreground text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+          <div className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
             <p className="mb-2">
               Built with{" "}
               <a
@@ -34,18 +34,19 @@ export const Footer = () => {
               </a>
               , fueled by curiosity (and coffee).
             </p>
-            <p>
+            <p className="text-xs">
               © {year} Aditya Pattanayak. All rights reserved (even the
               questionable commits)..
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <a
               href="https://x.com/AdityaPat_"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Twitter/X"
             >
               <XIcon />
             </a>
@@ -53,7 +54,8 @@ export const Footer = () => {
               href="https://github.com/AdityaP700"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="GitHub"
             >
               <Github size={16} />
             </a>
@@ -61,13 +63,15 @@ export const Footer = () => {
               href="https://www.linkedin.com/in/aditya-pattanayak-6b303b267/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="LinkedIn"
             >
               <Linkedin size={16} />
             </a>
             <a
               href="mailto:adityaa32078@gmail.com"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Email"
             >
               <Mail size={16} />
             </a>

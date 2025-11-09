@@ -40,7 +40,7 @@ export default function VisitorCounter() {
       </div>
       <p className="text-xs text-foreground/50 max-w-[200px]">
         {isNewVisitor ? (
-          <>Welcome! You're visitor <span className="font-semibold text-foreground/70">#{count.toLocaleString()}</span> 🎉</>
+          <>Welcome! You&apos;re visitor <span className="font-semibold text-foreground/70">#{count.toLocaleString()}</span> 🎉</>
         ) : (
           <>curious souls wandered here before you 👀</>
         )}

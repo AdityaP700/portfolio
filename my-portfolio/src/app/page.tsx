@@ -23,19 +23,19 @@ export default function Home() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-background/50 backdrop-blur-lg py-1 px-6 flex justify-between items-center text-theme-primary text-base sm:text-sm select-none border-b border-border">
-        <div className="text-[0.55rem] tracking-tight opacity-80">
+      <header className="sticky top-0 z-50 bg-background/50 backdrop-blur-lg py-1 px-3 sm:px-6 flex justify-between items-center text-theme-primary text-base sm:text-sm select-none border-b border-border">
+        <div className="text-[0.5rem] sm:text-[0.55rem] tracking-tight opacity-80">
           <PixelatedClock />
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <ThemeToggle />
           <LocationWeather />
         </div>
       </header>
-      <main className="flex flex-col items-center p-4 sm:p-8">
-        <div className="max-w-2xl w-full">
+      <main className="flex flex-col items-center p-3 sm:p-4 md:p-8 w-full overflow-x-hidden">
+        <div className="max-w-2xl w-full">{/* --- START: CENTERED IDENTITY BLOCK --- */}
           {/* --- START: CENTERED IDENTITY BLOCK --- */}
-          <section className="flex flex-col items-center pt-12 space-y-4 text-center">
+          <section className="flex flex-col items-center pt-8 sm:pt-12 space-y-4 text-center">
             {/* Profile Picture */}
             <div className="relative group">
               <Image
@@ -56,21 +56,19 @@ export default function Home() {
           </section>
 
           {/* Narrative Bio */}
-          <section className="mt-8">
-            {/* --- THE NEW, HUMANISTIC BIO --- */}
-            <div className="text-pretty text-[0.95rem] leading-relaxed text-foreground/80 max-w-xl mx-auto text-center md:text-left">
-              <p className="mb-4">
-                I&apos;m a 20 yo builder who&apos;s fundamentally curious. Most days, you&apos;ll find me chasing an idea down a rabbit hole, reverse-engineering something I probably shouldn&apos;t, or wrestling with a complex system until it finally clicks.
-              </p>
-              <p>
-                That&apos;s my entire playbook, really. It&apos;s how I&apos;ve approached the competitive thrill of hackathons,leading to wins at <span className="font-semibold text-foreground">Devpost</span> and top finishes at events by <span className="font-semibold text-foreground">
-                  IIT Kharagpur &amp; Bombay</span>. It&apos;s the same drive that had me shipping a dApp on the Solana mainnet, just to understand the nuts and bolts of the chain. Currently, that curiosity has me pointed squarely at the decentralized web.
-              </p>
-            </div>
-          </section>
+            <div className="text-pretty text-sm sm:text-[0.95rem] leading-relaxed text-foreground/80 max-w-xl mx-auto text-center md:text-center">
+  <p className="mb-4">
+    I’m 20, and honestly, I just love figuring things out. Most days, I’m either chasing some random idea that popped into my head, breaking down how something works, or getting lost in a system until that “ohhh, now it makes sense” moment hits.
+  </p>
+  <p>
+    That curiosity has taken me to some wild places  from late-night hackathon sprints to building and deploying a dApp on Solana just to see what really happens under the hood.
+    These days, that same itch to learn has me exploring the decentralized web and everything it might become.
+  </p>
+</div>
+
 
           {/* Animated Tech Stack Marquee */}
-          <div className="mt-12">
+          <div className="mt-8 sm:mt-12 w-full">
             <TechStackMarquee />
           </div>
           {/* --- END: THE NEW CORE IDENTITY BLOCK --- */}
@@ -79,10 +77,10 @@ export default function Home() {
           <hr className="my-12 border-border" />
 
           {/* --- NEW HOME HUB NAVIGATION --- */}
-          <nav className="flex justify-center gap-8 border-b border-border">
+          <nav className="flex justify-center gap-4 sm:gap-8 border-b border-border overflow-x-auto">
             <button
               onClick={() => setActiveView('home')}
-              className="relative py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
+              className="relative py-3 sm:py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors whitespace-nowrap"
             >
               Home
               {activeView === 'home' && (
@@ -95,7 +93,7 @@ export default function Home() {
             </button>
             <button
               onClick={() => setActiveView('projects')}
-              className="relative py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
+              className="relative py-3 sm:py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors whitespace-nowrap"
             >
               Projects
               {activeView === 'projects' && (
@@ -108,7 +106,7 @@ export default function Home() {
             </button>
             <button
               onClick={() => setActiveView('blogs')}
-              className="relative py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
+              className="relative py-3 sm:py-4 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors whitespace-nowrap"
             >
               Blogs
               {activeView === 'blogs' && (
@@ -122,7 +120,7 @@ export default function Home() {
           </nav>
 
           {/* --- DYNAMIC CONTENT PANE --- */}
-          <div className="w-full min-h-[600px]">
+          <div className="w-full min-h-[400px] sm:min-h-[600px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeView}
@@ -130,18 +128,18 @@ export default function Home() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -10, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="pt-8"
+                className="pt-6 sm:pt-8"
               >
                 {activeView === 'home' && (
-                  <div className="space-y-14">
+                  <div className="space-y-10 sm:space-y-14">
                     {/* --- 1. WORK EXPERIENCE (moved above featured) --- */}
-                    <section className="space-y-6">
+                    <section className="space-y-4 sm:space-y-6">
                       <h2 className="text-base font-semibold tracking-wide text-foreground mb-2">Work Experience</h2>
                       <WorkExperience />
                     </section>
 
                     {/* --- 2. FEATURED PROJECTS --- */}
-                    <section className="space-y-6">
+                    <section className="space-y-4 sm:space-y-6">
                       <h2 className="text-base font-semibold tracking-wide text-foreground mb-2">Featured Projects</h2>
                       <div className="flex flex-col gap-4">
                         {projects.filter((p) => p.isFeatured).map((project) => (
@@ -151,7 +149,7 @@ export default function Home() {
                     </section>
 
                     {/* --- 3. LIVE ACTIVITY --- */}
-                    <section className="space-y-6">
+                    <section className="space-y-4 sm:space-y-6">
                       <h2 className="text-base font-semibold tracking-wide text-foreground mb-2">Live Activity</h2>
                       <LiveCommitFeed />
                       <div className="mt-4">
@@ -175,7 +173,7 @@ export default function Home() {
                     </section>
 
                     {/* --- 4. LATEST WRITINGS --- */}
-                    <section className="space-y-6">
+                    <section className="space-y-4 sm:space-y-6">
                       <WritingsSection limit={3} showTitle={true} />
                     </section>
                   </div>
@@ -187,7 +185,7 @@ export default function Home() {
           </div>
 
           {/* --- FINAL CTA --- */}
-          <div className="pt-16">
+          <div className="pt-12 sm:pt-16">
             <FinalCTA />
           </div>
         </div>

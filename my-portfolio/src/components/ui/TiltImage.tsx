@@ -12,11 +12,11 @@ interface TiltImageProps {
   height?: number;
 }
 
-export const TiltImage: React.FC<TiltImageProps> = ({ 
-  src, 
-  alt, 
-  width = 160, 
-  height = 160 
+export const TiltImage: React.FC<TiltImageProps> = ({
+  src,
+  alt,
+  width = 160,
+  height = 160
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -81,12 +81,12 @@ export const TiltImage: React.FC<TiltImageProps> = ({
         }}
       >
         {/* Glassmorphism backdrop */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-white/5 dark:from-white/5 dark:to-white/0 backdrop-blur-sm border border-white/10 dark:border-white/5" 
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-white/5 dark:from-white/5 dark:to-white/0 backdrop-blur-sm border border-white/10 dark:border-white/5"
           style={{
             transform: "translateZ(-20px)",
           }}
         />
-        
+
         {/* Image */}
         <div className="relative w-full h-full p-3">
           <Image
@@ -96,8 +96,8 @@ export const TiltImage: React.FC<TiltImageProps> = ({
             height={height}
             className="object-contain w-full h-full drop-shadow-2xl"
             style={{
-              filter: isHovered 
-                ? "drop-shadow(0 20px 40px rgba(0,0,0,0.3))" 
+              filter: isHovered
+                ? "drop-shadow(0 20px 40px rgba(0,0,0,0.3))"
                 : "drop-shadow(0 10px 20px rgba(0,0,0,0.2))",
             }}
           />
