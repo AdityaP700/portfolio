@@ -14,7 +14,7 @@ export default function TechStackCarousel() {
   }, []);
 
   const Current = techStackCarousel[index];
-  const Icon = Current.icon as any;
+  const Icon = Current.icon;
 
   return (
     <div className="flex justify-center items-center text-sm text-foreground/60">

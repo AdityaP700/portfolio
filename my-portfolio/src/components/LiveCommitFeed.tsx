@@ -12,19 +12,14 @@ type Contribution = {
   timestamp: string;
 };
 
-interface PushEventPayload {
-  commits?: { message: string; sha: string }[];
-}
-interface PullRequestPayload {
-  action?: string;
-  pull_request?: { title: string; html_url: string };
-}
-interface GitHubEvent {
-  type: string;
-  repo: { name: string };
-  payload: PushEventPayload & PullRequestPayload & Record<string, unknown>;
-  created_at: string;
-}
+interface CommitItem { message: string; sha: string; url?: string }
+interface PushEventPayload { commits?: CommitItem[] }
+interface PullRequestData { title: string; html_url: string }
+interface PullRequestPayload { pull_request?: PullRequestData }
+interface BaseEvent { type: string; repo: { name: string }; created_at: string }
+interface PushEvent extends BaseEvent { type: "PushEvent"; payload: PushEventPayload }
+interface PullRequestEvent extends BaseEvent { type: "PullRequestEvent"; payload: PullRequestPayload }
+type GitHubEvent = PushEvent | PullRequestEvent | (BaseEvent & { payload: Record<string, unknown> })
 
 function formatDateDistance(date: string) {
   const diff = Date.now() - new Date(date).getTime();
@@ -49,36 +44,33 @@ async function fetchLatestContributions(): Promise<Contribution[]> {
     const res = await fetch("/api/github-events", { next: { revalidate: 60 } });
     if (!res.ok) return [];
 
-    const events: GitHubEvent[] = await res.json();
+  const events: GitHubEvent[] = await res.json();
     console.log("Raw GitHub events:", events);
 
     const unique = new Map();
-    const contributions = events
-      .filter((e) => e.type === "PushEvent" || e.type === "PullRequestEvent")
+    const contributions: Contribution[] = events
+      .filter((e): e is PushEvent | PullRequestEvent => e.type === "PushEvent" || e.type === "PullRequestEvent")
       .flatMap((e) => {
-        if (e.type === "PushEvent" && Array.isArray((e as any).payload?.commits)) {
-          return (e as any).payload.commits.map((c: any) => ({
-            type: "Commit",
+        if (e.type === "PushEvent" && Array.isArray(e.payload.commits)) {
+          return e.payload.commits.map<Contribution>((c) => ({
+            type: "Commit" as const,
             repo: e.repo.name,
             title: c.message.split("\n")[0],
             url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
             timestamp: e.created_at,
           }));
         }
-
-        if (e.type === "PullRequestEvent" && (e as any).payload?.pull_request) {
-          const pr = (e as any).payload.pull_request;
-          return [
-            {
-              type: "Pull Request",
-              repo: e.repo.name,
-              title: pr.title,
-              url: pr.html_url,
-              timestamp: e.created_at,
-            },
-          ];
+        if (e.type === "PullRequestEvent" && e.payload.pull_request) {
+          const pr = e.payload.pull_request;
+          return [{
+            type: "Pull Request" as const,
+            repo: e.repo.name,
+            title: pr.title,
+            url: pr.html_url,
+            timestamp: e.created_at,
+          }];
         }
-        return [];
+        return [] as Contribution[];
       })
       .filter((item) => {
         const key = `${item.type}-${item.repo}-${item.title}`;

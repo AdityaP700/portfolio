@@ -3,22 +3,24 @@ import { ExternalLink } from "lucide-react";
 
 // Micro–writings: short, formatted thought excerpts (no deep blog feel yet)
 // Keep each entry intentionally concise – can expand later into full posts.
-const writings = [
-  // {
-  //   title: "Momentum Over Perfection",
-  //   // Structured excerpt intentionally preserves markdown bullet/line rhythm via manual line breaks
-  //   excerpt: `Ship → Learn → Repeat.\nPlanning past first useful iteration stalls feedback loops.\nFocus: smallest version that teaches you something today.`,
-  //   date: "Nov 9, 2025",
-  //   tags: ["Philosophy", "Building", "Learning"],
-  //   url: "/blogs/momentum-over-perfection" // still routable, but treated as an excerpt
-  // },
-  // {
-  //   title: "Tiny Surface, Real Signal",
-  //   excerpt: `Release to 5–10 honest users.\nSignal emerges faster than crafting polish for imaginary scale.\nOptimize early for conversations, not conversions.`,
-  //   date: "Nov 9, 2025",
-  //   tags: ["Product", "Early Stage"],
-  //   url: "#" // placeholder until a full article exists
-  // }
+// Explicitly typed to avoid implicit any / never inference issues.
+interface WritingEntry {
+  title: string;
+  excerpt: string;
+  date: string;
+  tags: string[];
+  url: string; // external or internal; "#" denotes non-link placeholder
+}
+
+const writings: WritingEntry[] = [
+  {
+    title: "Momentum Over Perfection",
+    excerpt:
+      `Ship → Learn → Repeat.\nPlanning past first useful iteration stalls feedback loops.\nFocus: smallest version that teaches you something today.`,
+    date: "Nov 9, 2025",
+    tags: ["Philosophy", "Building", "Learning"],
+    url: "/blogs/momentum-over-perfection",
+  },
 ];
 
 interface WritingsSectionProps {
@@ -39,7 +41,7 @@ export default function WritingsSection({ limit, showTitle = true }: WritingsSec
       )}
 
       <div className="space-y-3">
-        {displayedWritings.map((w, i) => {
+  {displayedWritings.map((w: WritingEntry, i: number) => {
           const isLinkable = w.url && w.url !== "#";
           const common = (
             <>
@@ -53,8 +55,13 @@ export default function WritingsSection({ limit, showTitle = true }: WritingsSec
                 )}
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                {w.tags.map((tag, tIndex) => (
-                  <span key={tIndex} className="rounded-md border border-border/50 bg-foreground/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-foreground/50 group-hover:bg-foreground/[0.06]">{tag}</span>
+                {w.tags.map((tag: string, tIndex: number) => (
+                  <span
+                    key={tIndex}
+                    className="rounded-md border border-border/50 bg-foreground/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-foreground/50 group-hover:bg-foreground/[0.06]"
+                  >
+                    {tag}
+                  </span>
                 ))}
                 <span className="ml-auto text-[10px] font-medium text-foreground/40">{w.date}</span>
               </div>

@@ -23,14 +23,24 @@ export async function GET() {
       return NextResponse.json({ error: text }, { status: ghRes.status });
     }
 
-    const events = await ghRes.json();
+    type CommitItem = { message: string; sha?: string; url?: string };
+    type GitHubEvent = {
+      type: string;
+      repo: { name: string };
+      payload: {
+        commits?: CommitItem[];
+        pull_request?: { title?: string; html_url?: string };
+        [k: string]: unknown;
+      };
+      created_at: string;
+    };
+
+    const events: GitHubEvent[] = await ghRes.json();
 
     // Only show relevant events
     const filtered = events
-      .filter((e: any) =>
-        ["PushEvent", "PullRequestEvent"].includes(e.type)
-      )
-      .map((e: any) => ({
+      .filter((e) => e.type === "PushEvent" || e.type === "PullRequestEvent")
+      .map((e) => ({
         repo: e.repo.name,
         type: e.type === "PushEvent" ? "Commit" : "Pull Request",
         title:
@@ -51,7 +61,8 @@ export async function GET() {
     const res = NextResponse.json(filtered, { status: 200 });
     res.headers.set("Cache-Control", "s-maxage=60, stale-while-revalidate=30");
     return res;
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message ?? "Unknown error" }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
