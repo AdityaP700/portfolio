@@ -49,7 +49,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <motion.div
       /* Card stays static; only image enlarges */
-      className="group relative flex flex-col md:flex-row h-auto md:h-[180px] w-full overflow-hidden rounded-xl border border-border bg-card backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.03)] transition-colors"
+      className="group relative flex flex-col md:flex-row h-auto md:h-[180px] w-full overflow-hidden rounded border border-border bg-card backdrop-blur-md shadow-[0_1px_0_0_rgba(255,255,255,0.03)] transition-colors"
     style={{ borderRadius: 0 }}>
 <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-white/1 dark:bg-black/2" />
       <LeftWrapper>
@@ -61,6 +61,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               alt={title}
               width={260}
               height={180}
+              rounded={false}
+              chrome={true}
             />
           </div>
         </div>
