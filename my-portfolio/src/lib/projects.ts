@@ -25,7 +25,7 @@ export const projects: ProjectType[] = [
   ],
   isFeatured:true,
   image: "/Exora.png",
-  link: "exora-task.vercel.app",
+  link: "https://exora-task.vercel.app/",
   githubLink: "https://github.com/AdityaP700/Exora-task",
   isLive: true
 },{
