@@ -71,7 +71,7 @@ export const projects: ProjectType[] = [
   isLive: true
 },
   {
-    title: "PrivacyGuard",
+    title: "URLguard",
     category: "ML",
     description:
       "Built a browser extension against phishing attacks. Implemented on-device TensorFlow.js models and heuristic analysis to detect and block threats in real-time without compromising user privacy or requiring server communication.",
