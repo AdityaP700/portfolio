@@ -117,6 +117,24 @@ export const projects: ProjectType[] = [
   link: "botify.vercel.app",
   githubLink: "https://github.com/AdityaP700/botify",
   isLive: false
+},
+{
+  title: "Shinobi",
+  category: "Web3",
+  isFeatured: true,
+  description: "A CLI for NFT , forged in Rust. Bypasses slow, cluttered UIs to deliver instant, high-signal forensic reports on Solana NFTs and wallets directly in your terminal. Features include forensic unmask for complete NFT intelligence reports, wallet dossier generation, visual confirmation with full-color terminal rendering, and an interactive shell for rapid analysis. Built for speed, accuracy, and a beautiful UX.",
+  technologies: [
+    "Rust",
+    "Solana",
+    "Tokio",
+    "CLI",
+    "RPC",
+    "Async"
+  ],
+  image: "/shinobi.png",
+  link: null,
+  githubLink: "https://github.com/AdityaP700/shinobi",
+  isLive: false
 }
 
   ,

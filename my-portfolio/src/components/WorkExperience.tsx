@@ -3,18 +3,21 @@ import Image from "next/image";
 
 // Structured professional experience entries
 const experiences = [
-  { logo: "/stealth.webp",
+  {
+    logo: "/stealth.webp",
     company: "Stealth Startup",
     role: "Backend Engineer",
-    date: "Sep 2025 - Present",
+    date: "Oct 2025 - Jan 2026",
     location: "Remote",
-    description: [
-      "Building and maintaining scalable server-side services for the core platform.",
-      "Collaborating across product + frontend to refine API contracts and performance.",
-    ],
+   description: [
+  "Worked on backend services for a production platform, contributing to APIs, data flows, and system reliability.",
+  "Gained hands-on experience with CI/CD pipelines, Docker, and AWS (ECS, S3, ECR) in a fast-paced startup environment.",
+  "Collaborated cross-functionally while learning real-world trade-offs between rapid iteration and maintainable system design.",
+],
+
   },
-  // Future roles or internships can be appended here following the same shape.
 ];
+
 
 export const WorkExperience = () => {
   return (

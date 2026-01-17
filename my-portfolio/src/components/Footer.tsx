@@ -43,7 +43,7 @@ export const Footer = () => {
     <footer className="relative border-t border-border/40 mt-20 w-full overflow-hidden">
       {/* Gradient Background Effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 pointer-events-none" />
-      
+
       <div className="container relative mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12 max-w-5xl">
         {/* Visitor Counter */}
         <div className="flex justify-center mb-8 sm:mb-10">
@@ -69,7 +69,7 @@ export const Footer = () => {
           </div>
 
           {/* Bio Section */}
-          <div className="text-center max-w-2xl">
+          {/* <div className="text-center max-w-2xl">
             <p className="text-sm sm:text-base text-muted-foreground mb-3 leading-relaxed">
               Built with{" "}
               <Heart className="inline h-4 w-4 text-red-500 animate-pulse" />{" "}
@@ -85,7 +85,7 @@ export const Footer = () => {
               , fueled by curiosity & endless{" "}
               <Coffee className="inline h-4 w-4 text-amber-600" />
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* Divider */}
@@ -96,7 +96,7 @@ export const Footer = () => {
               © {year} Aditya Pattanayak. All rights reserved.
             </p>
             <p className="text-center sm:text-right opacity-75">
-              Crafted with passion, one commit at a time ✨
+              Crafted with passion, one commit at a time
             </p>
           </div>
         </div>
