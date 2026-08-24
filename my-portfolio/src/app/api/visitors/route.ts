@@ -1,47 +1,51 @@
-// src/app/api/visitors/route.ts
-import { redis } from '@/lib/redis';
-import { NextRequest, NextResponse } from 'next/server';
+import { redis } from "@/lib/redis";
+import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = 'edge';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
+  const configured = Boolean(
+    process.env.UPSTASH_REDIS_REST_URL &&
+      process.env.UPSTASH_REDIS_REST_TOKEN,
+  );
+
+  if (!configured) {
+    return NextResponse.json({ configured: false });
+  }
+
   try {
-    // Get the visitor's IP address
-    const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || 'unknown';
-
-    // Hash the IP for privacy (optional but recommended)
+    const forwarded = request.headers.get("x-forwarded-for");
+    const ip =
+      forwarded?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "unknown";
     const ipHash = await hashIP(ip);
-
-    // Check if this IP has visited before
-    const hasVisited = await redis.get(`visitor:${ipHash}`);
+    const visitorKey = `visitor:${ipHash}`;
+    const hasVisited = await redis.get(visitorKey);
 
     if (!hasVisited) {
-      // New visitor - increment total count and mark this IP as visited
-      await redis.incr('visitors:total');
-      // Store the IP hash with a long expiration (e.g., 365 days)
-      await redis.set(`visitor:${ipHash}`, 'true', { ex: 365 * 24 * 60 * 60 });
+      await redis.incr("visitors:total");
+      await redis.set(visitorKey, "true", { ex: 365 * 24 * 60 * 60 });
     }
 
-    // Get the total visitor count
-    const totalVisitors = await redis.get('visitors:total') || 0;
+    const totalVisitors = (await redis.get<number>("visitors:total")) ?? 0;
 
     return NextResponse.json({
+      configured: true,
       count: totalVisitors,
-      isNewVisitor: !hasVisited
+      isNewVisitor: !hasVisited,
     });
-  } catch (error) {
-    console.error('Error tracking visitor:', error);
-    // Return a fallback count if Redis is not configured
-    return NextResponse.json({ count: 0, isNewVisitor: false });
+  } catch {
+    // Analytics should never break or clutter the portfolio when unavailable.
+    return NextResponse.json({ configured: false });
   }
 }
 
-// Simple hash function for IP addresses
 async function hashIP(ip: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(ip);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }

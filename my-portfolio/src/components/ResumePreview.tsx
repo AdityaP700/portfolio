@@ -52,13 +52,13 @@ export default function ResumePreview({ className, label = "Resume" }: ResumePre
               </div>
               <div className="flex items-center gap-2">
                 <Button asChild size="sm" variant="outline" className="hidden h-8 rounded-md bg-transparent text-xs sm:inline-flex">
-                  <a href="/Aditya_resume.pdf" download>
+                  <a href="/Aditya_AI_updated.pdf" download>
                     <Download className="h-3.5 w-3.5" />
                     Download
                   </a>
                 </Button>
                 <Button asChild size="sm" variant="outline" className="hidden h-8 rounded-md bg-transparent text-xs sm:inline-flex">
-                  <a href="/Aditya_resume.pdf" target="_blank" rel="noopener noreferrer">
+                  <a href="/Aditya_AI_updated.pdf" target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-3.5 w-3.5" />
                     Open
                   </a>
@@ -74,19 +74,19 @@ export default function ResumePreview({ className, label = "Resume" }: ResumePre
               </div>
             </div>
             <iframe
-              src="/Aditya_resume.pdf#view=FitH"
+              src="/Aditya_AI_updated.pdf?v=2026-08#view=FitH"
               title="Aditya Pattanayak resume preview"
               className="h-full w-full bg-white"
             />
             <div className="flex gap-2 border-t border-border bg-background/90 p-3 sm:hidden">
               <Button asChild size="sm" variant="outline" className="flex-1 rounded-md bg-transparent text-xs">
-                <a href="/Aditya_resume.pdf" download>
+                <a href="/Aditya_AI_updated.pdf" download>
                   <Download className="h-3.5 w-3.5" />
                   Download
                 </a>
               </Button>
               <Button asChild size="sm" variant="outline" className="flex-1 rounded-md bg-transparent text-xs">
-                <a href="/Aditya_resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="/Aditya_AI_updated.pdf" target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-3.5 w-3.5" />
                   Open
                 </a>

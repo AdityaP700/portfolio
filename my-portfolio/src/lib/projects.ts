@@ -89,6 +89,7 @@ export const projects: ProjectType[] = [
     description:
       "A from-scratch attention learning project for understanding query, key, value mechanics instead of treating model internals as a black box.",
     technologies: ["Python", "Transformers", "Attention", "QKV", "Learning"],
+    image: "/qkv-otter.png",
     link: null,
     githubLink: "https://github.com/AdityaP700/QKVOtter",
     isLive: false,
