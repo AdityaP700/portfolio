@@ -4,47 +4,30 @@
 import { useEffect, useState } from "react";
 import { Eye } from "lucide-react";
 
+type VisitorPayload = {
+  count?: number;
+  isNewVisitor?: boolean;
+};
+
 export default function VisitorCounter() {
-  const [count, setCount] = useState<number | null>(null);
-  const [isNewVisitor, setIsNewVisitor] = useState(false);
+  const [data, setData] = useState<VisitorPayload | null>(null);
 
   useEffect(() => {
-    // Fetch visitor count on mount
-    fetch('/api/visitors')
-      .then(res => res.json())
-      .then(data => {
-        setCount(data.count);
-        setIsNewVisitor(data.isNewVisitor);
-      })
-      .catch(err => {
-        console.error('Error fetching visitor count:', err);
-      });
+    fetch("/api/visitors", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((payload: VisitorPayload) => setData(payload))
+      .catch(() => setData({ count: 0, isNewVisitor: false }));
   }, []);
 
-  if (count === null) {
-    return (
-      <div className="flex items-center gap-2 text-foreground/40 text-sm animate-pulse">
-        <Eye size={16} />
-        <span>Loading visitors...</span>
-      </div>
-    );
-  }
+  const count = data?.count ?? 0;
 
   return (
-    <div className="flex flex-col items-center gap-1.5 text-center">
-      <div className="flex items-center gap-2 text-foreground/60">
-        <Eye size={18} className="text-foreground/40" />
-        <span className="text-2xl font-bold tabular-nums text-foreground">
-          {count.toLocaleString()}
-        </span>
-      </div>
-      <p className="text-xs text-foreground/50 max-w-[200px]">
-        {isNewVisitor ? (
-          <>Welcome! You&apos;re visitor <span className="font-semibold text-foreground/70">#{count.toLocaleString()}</span> 🎉</>
-        ) : (
-          <>curious souls wandered here before you 👀</>
-        )}
-      </p>
+    <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-3 py-1.5 text-xs text-foreground/60 backdrop-blur-md">
+      <Eye size={14} className="text-foreground/40" />
+      <span className="font-mono tabular-nums text-foreground/80">
+        {data === null ? "--" : count.toLocaleString()}
+      </span>
+      <span>{data?.isNewVisitor ? "new visitor" : "visits"}</span>
     </div>
   );
 }

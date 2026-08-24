@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+
+import { useMemo, useState } from "react";
 import { projects } from "@/lib/projects";
 import ProjectCard from "@/components/ProjectCard";
 
@@ -7,23 +8,28 @@ interface ProjectsSectionProps {
   showTitle?: boolean;
 }
 
+const categories = ["All", "AI Infra", "LLM", "RAG", "ML", "Rust", "Web3"] as const;
+
 export default function ProjectsSection({ showTitle = true }: ProjectsSectionProps) {
-  const categories = ["All", "Web3", "ML", "Web App"] as const;
   const [selected, setSelected] = useState<(typeof categories)[number]>("All");
 
-  const filtered = selected === "All"
-    ? projects
-    : projects.filter((p) => p.category === selected);
+  const filtered = useMemo(
+    () => selected === "All" ? projects : projects.filter((p) => p.category === selected),
+    [selected]
+  );
 
   return (
-    <section className="space-y-6">
+    <section id="projects" className="space-y-6">
       {showTitle && (
-        <h2 className="font-bold text-center sm:text-left text-base text-foreground tracking-wide">
-          Proof of Work
-        </h2>
+        <div className="space-y-2">
+          <p className="section-kicker">02 / Selected Work</p>
+          <h2 className="section-heading">Engineering evidence, not just screenshots.</h2>
+          <p className="max-w-2xl text-sm leading-relaxed text-foreground/58">
+            AI infrastructure, retrieval systems, LLM products, and lower-priority supporting Web3/Rust work.
+          </p>
+        </div>
       )}
 
-      {/* Filter Bar */}
       <div className="flex flex-wrap items-center gap-2">
         {categories.map((cat) => {
           const active = selected === cat;
@@ -32,10 +38,10 @@ export default function ProjectsSection({ showTitle = true }: ProjectsSectionPro
               key={cat}
               onClick={() => setSelected(cat)}
               className={
-                "px-3 py-1.5 rounded-full text-xs font-medium transition-colors border " +
+                "rounded-full border px-3 py-1.5 font-mono text-[11px] transition-colors " +
                 (active
-                  ? "bg-foreground/15 text-foreground border-border"
-                  : "bg-card text-foreground/70 hover:text-foreground hover:bg-foreground/10 border-border")
+                  ? "border-foreground/25 bg-foreground/12 text-foreground"
+                  : "border-border/70 bg-card/60 text-foreground/55 hover:border-foreground/20 hover:text-foreground")
               }
               aria-pressed={active}
             >
@@ -45,15 +51,14 @@ export default function ProjectsSection({ showTitle = true }: ProjectsSectionPro
         })}
       </div>
 
-      {/* Projects List - only render if there are projects */}
       {filtered.length > 0 ? (
-        <div className="flex flex-col gap-4">
+        <div className="grid gap-4">
           {filtered.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+            <ProjectCard key={project.title} project={project} compact={!project.isFeatured} />
           ))}
         </div>
       ) : (
-        <div className="py-8 text-center text-foreground/40 text-sm">
+        <div className="rounded-lg border border-border/70 py-10 text-center text-sm text-foreground/40">
           No projects found in this category.
         </div>
       )}
