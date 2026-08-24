@@ -1,103 +1,81 @@
-// src/components/Footer.tsx
-import { Github, Linkedin, Mail, Heart, Coffee } from "lucide-react";
-// import VisitorCounter from "./VisitorCounter";
+import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 
 const XIcon = () => (
-  // Simple X icon component
-  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
+
+const socialLinks = [
+  { href: "https://x.com/AdityaPat_", icon: <XIcon />, label: "X" },
+  { href: "https://github.com/AdityaP700", icon: <Github className="h-4 w-4" />, label: "GitHub" },
+  {
+    href: "https://www.linkedin.com/in/aditya-pattanayak-6b303b267/",
+    icon: <Linkedin className="h-4 w-4" />,
+    label: "LinkedIn",
+  },
+  { href: "mailto:adityaa32078@gmail.com", icon: <Mail className="h-4 w-4" />, label: "Email" },
+];
 
 export const Footer = () => {
   const year = new Date().getFullYear();
 
-  const socialLinks = [
-    {
-      href: "https://x.com/AdityaPat_",
-      icon: <XIcon />,
-      label: "Twitter/X",
-      hoverColor: "hover:text-blue-400",
-    },
-    {
-      href: "https://github.com/AdityaP700",
-      icon: <Github size={20} />,
-      label: "GitHub",
-      hoverColor: "hover:text-purple-400",
-    },
-    {
-      href: "https://www.linkedin.com/in/aditya-pattanayak-6b303b267/",
-      icon: <Linkedin size={20} />,
-      label: "LinkedIn",
-      hoverColor: "hover:text-blue-500",
-    },
-    {
-      href: "mailto:adityaa32078@gmail.com",
-      icon: <Mail size={20} />,
-      label: "Email",
-      hoverColor: "hover:text-red-400",
-    },
-  ];
-
   return (
-    <footer className="relative border-t border-border/40 mt-20 w-full overflow-hidden">
-      {/* Gradient Background Effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 pointer-events-none" />
+    <footer className="relative mt-8 w-full overflow-hidden border-t border-border/70">
+      <div
+        className="h-8 border-b border-border/60 opacity-65"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(135deg, color-mix(in oklch, var(--border) 85%, transparent) 0, color-mix(in oklch, var(--border) 85%, transparent) 1px, transparent 1px, transparent 8px)",
+        }}
+      />
 
-      <div className="container relative mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12 max-w-5xl">
-        {/* Visitor Counter */}
-        <div className="flex justify-center mb-8 sm:mb-10">
-          {/* <VisitorCounter /> */}
+      <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+
+        <div className="relative grid gap-10 md:grid-cols-[1fr_280px] md:items-end">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-emerald-500/70">
+              You reached the end
+            </p>
+            <h2 className="mt-4 max-w-2xl text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-foreground sm:text-5xl">
+              Still curious?
+              <span className="block text-foreground/35">Good. So am I.</span>
+            </h2>
+          </div>
+
+          <div className="border-l border-border/65 pl-5">
+            <p className="text-sm leading-relaxed text-foreground/58">
+              Have a strange bug, an ambitious system, or just a good question?
+            </p>
+            <a
+              href="mailto:adityaa32078@gmail.com"
+              className="group mt-5 inline-flex items-center gap-3 border-b border-foreground/45 pb-2 text-sm font-medium text-foreground transition-colors hover:border-emerald-400 hover:text-emerald-400"
+            >
+              Send it my way
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex flex-col items-center gap-8 mb-8">
-          {/* Social Links - Featured */}
-          <div className="flex items-center gap-4 sm:gap-6">
+        <div className="relative mt-14 flex flex-col gap-6 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
             {socialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target={link.href.startsWith("mailto") ? undefined : "_blank"}
                 rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className={`text-muted-foreground transition-all duration-300 hover:scale-110 ${link.hoverColor} p-2 rounded-lg hover:bg-accent/50`}
-                aria-label={link.label}
+                className="inline-flex items-center gap-2 text-xs text-foreground/48 transition-colors hover:text-foreground"
               >
                 {link.icon}
+                <span>{link.label}</span>
               </a>
             ))}
           </div>
 
-          {/* Bio Section */}
-          {/* <div className="text-center max-w-2xl">
-            <p className="text-sm sm:text-base text-muted-foreground mb-3 leading-relaxed">
-              Built with{" "}
-              <Heart className="inline h-4 w-4 text-red-500 animate-pulse" />{" "}
-              using{" "}
-              <a
-                href="https://nextjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-foreground hover:text-primary transition-colors underline decoration-dotted underline-offset-4"
-              >
-                Next.js
-              </a>
-              , fueled by curiosity & endless{" "}
-              <Coffee className="inline h-4 w-4 text-amber-600" />
-            </p>
-          </div> */}
-        </div>
-
-        {/* Divider */}
-        <div className="border-t border-border/40 pt-6">
-          {/* Copyright */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs sm:text-sm text-muted-foreground">
-            <p className="text-center sm:text-left">
-              © {year} Aditya Pattanayak. All rights reserved.
-            </p>
-            <p className="text-center sm:text-right opacity-75">
-              Crafted with passion, one commit at a time
-            </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/30">
+            <span>© {year} Aditya Pattanayak</span>
+            <span>India · Open to internships</span>
           </div>
         </div>
       </div>

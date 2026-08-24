@@ -21,6 +21,9 @@ export default function VisitorCounter() {
 
   const count = data?.count ?? 0;
 
+  // Never show a fabricated count. If backend isn't configured or fails, hide.
+  if (data !== null && count === 0) return null;
+
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-3 py-1.5 text-xs text-foreground/60 backdrop-blur-md">
       <Eye size={14} className="text-foreground/40" />

@@ -12,14 +12,38 @@ type Contribution = {
   timestamp: string;
 };
 
-interface CommitItem { message: string; sha: string; url?: string }
-interface PushEventPayload { commits?: CommitItem[] }
-interface PullRequestData { title: string; html_url: string }
-interface PullRequestPayload { pull_request?: PullRequestData }
-interface BaseEvent { type: string; repo: { name: string }; created_at: string }
-interface PushEvent extends BaseEvent { type: "PushEvent"; payload: PushEventPayload }
-interface PullRequestEvent extends BaseEvent { type: "PullRequestEvent"; payload: PullRequestPayload }
-type GitHubEvent = PushEvent | PullRequestEvent | (BaseEvent & { payload: Record<string, unknown> })
+interface CommitItem {
+  message: string;
+  sha: string;
+  url?: string;
+}
+interface PushEventPayload {
+  commits?: CommitItem[];
+}
+interface PullRequestData {
+  title: string;
+  html_url: string;
+}
+interface PullRequestPayload {
+  pull_request?: PullRequestData;
+}
+interface BaseEvent {
+  type: string;
+  repo: { name: string };
+  created_at: string;
+}
+interface PushEvent extends BaseEvent {
+  type: "PushEvent";
+  payload: PushEventPayload;
+}
+interface PullRequestEvent extends BaseEvent {
+  type: "PullRequestEvent";
+  payload: PullRequestPayload;
+}
+type GitHubEvent =
+  | PushEvent
+  | PullRequestEvent
+  | (BaseEvent & { payload: Record<string, unknown> });
 
 function formatDateDistance(date: string) {
   const diff = Date.now() - new Date(date).getTime();
@@ -40,52 +64,52 @@ function formatDateHeader() {
 }
 
 async function fetchLatestContributions(): Promise<Contribution[]> {
-  try {
-    const res = await fetch("/api/github-events", { next: { revalidate: 60 } });
-    if (!res.ok) return [];
+  const res = await fetch("/api/github-events", { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("github_unavailable");
+  }
 
   const events: GitHubEvent[] = await res.json();
-    console.log("Raw GitHub events:", events);
 
-    const unique = new Map();
-    const contributions: Contribution[] = events
-      .filter((e): e is PushEvent | PullRequestEvent => e.type === "PushEvent" || e.type === "PullRequestEvent")
-      .flatMap((e) => {
-        if (e.type === "PushEvent" && Array.isArray(e.payload.commits)) {
-          return e.payload.commits.map<Contribution>((c) => ({
-            type: "Commit" as const,
-            repo: e.repo.name,
-            title: c.message.split("\n")[0],
-            url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
-            timestamp: e.created_at,
-          }));
-        }
-        if (e.type === "PullRequestEvent" && e.payload.pull_request) {
-          const pr = e.payload.pull_request;
-          return [{
+  const unique = new Map();
+  const contributions: Contribution[] = events
+    .filter(
+      (e): e is PushEvent | PullRequestEvent =>
+        e.type === "PushEvent" || e.type === "PullRequestEvent",
+    )
+    .flatMap((e) => {
+      if (e.type === "PushEvent" && Array.isArray(e.payload.commits)) {
+        return e.payload.commits.map<Contribution>((c) => ({
+          type: "Commit" as const,
+          repo: e.repo.name,
+          title: c.message.split("\n")[0],
+          url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
+          timestamp: e.created_at,
+        }));
+      }
+      if (e.type === "PullRequestEvent" && e.payload.pull_request) {
+        const pr = e.payload.pull_request;
+        return [
+          {
             type: "Pull Request" as const,
             repo: e.repo.name,
             title: pr.title,
             url: pr.html_url,
             timestamp: e.created_at,
-          }];
-        }
-        return [] as Contribution[];
-      })
-      .filter((item) => {
-        const key = `${item.type}-${item.repo}-${item.title}`;
-        if (unique.has(key)) return false;
-        unique.set(key, true);
-        return true;
-      })
-      .slice(0, 6);
+          },
+        ];
+      }
+      return [] as Contribution[];
+    })
+    .filter((item) => {
+      const key = `${item.type}-${item.repo}-${item.title}`;
+      if (unique.has(key)) return false;
+      unique.set(key, true);
+      return true;
+    })
+    .slice(0, 6);
 
-    console.log("Filtered & mapped contributions:", contributions);
-    return contributions;
-  } catch (err) {
-    console.error("Error fetching contributions:", err);
-    return [];
-  }
+  return contributions;
 }
 
 const LiveCommitFeed: React.FC = () => {
@@ -96,10 +120,14 @@ const LiveCommitFeed: React.FC = () => {
     let active = true;
     const load = async () => {
       try {
+        setError(false);
         const data = await fetchLatestContributions();
         if (active) setItems(data);
       } catch {
-        if (active) setError(true);
+        if (active) {
+          setError(true);
+          setItems([]);
+        }
       }
     };
     load();
@@ -111,11 +139,19 @@ const LiveCommitFeed: React.FC = () => {
   }, []);
 
   if (error)
-    return <p className="text-sm text-red-400">Failed to load activity.</p>;
+    return (
+      <p className="text-sm text-foreground/45">
+        GitHub activity is unavailable right now.
+      </p>
+    );
   if (!items)
-    return <p className="text-sm text-foreground/40">Loading recent activity…</p>;
+    return (
+      <p className="text-sm text-foreground/40">Loading recent activity…</p>
+    );
   if (items.length === 0)
-    return <p className="text-sm text-foreground/40">No recent public contributions.</p>;
+    return (
+      <p className="text-sm text-foreground/40">No recent public events.</p>
+    );
 
   return (
     <div className="w-full">
@@ -154,16 +190,16 @@ const LiveCommitFeed: React.FC = () => {
                   {item.title}
                 </p>
                 <p className="text-xs text-foreground/50 mt-1 truncate">
-  {item.type === "Commit" ? "Committed to" : "Opened PR in"}{" "}
-  <a
-    href={item.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-foreground/70 hover:text-foreground hover:underline transition-colors"
-  onClick={(e) => e.stopPropagation()}>
-    {item.repo}
- </a>
-
+                  {item.type === "Commit" ? "Committed to" : "Opened PR in"}{" "}
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground/70 hover:text-foreground hover:underline transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {item.repo}
+                  </a>
                 </p>
               </div>
             </div>

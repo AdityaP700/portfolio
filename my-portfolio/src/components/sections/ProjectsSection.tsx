@@ -1,66 +1,98 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { projects } from "@/lib/projects";
-import ProjectCard from "@/components/ProjectCard";
+import { projects, type ProjectType } from "@/lib/projects";
+import {
+  ProjectEditorialCard,
+  type EditorialProject,
+} from "@/components/projects/ProjectEditorial";
 
 interface ProjectsSectionProps {
   showTitle?: boolean;
 }
 
-const categories = ["All", "AI Infra", "LLM", "RAG", "ML", "Rust", "Web3"] as const;
+const categories = ["All", "AI", "Backend", "RAG", "Systems", "Web3"] as const;
+type Category = (typeof categories)[number];
+
+function matchesCategory(project: ProjectType, category: Category) {
+  if (category === "All") return true;
+  if (category === "AI") return ["AI Infra", "LLM", "ML"].includes(project.category ?? "");
+  if (category === "Backend") {
+    return project.technologies.some((tech) =>
+      ["Node.js", "Python", "SSE", "MongoDB", "Prisma"].includes(tech),
+    );
+  }
+  if (category === "RAG") {
+    return project.category === "RAG" || project.technologies.some((tech) =>
+      ["RAG", "BM25", "Reranking", "Retrieval"].includes(tech),
+    );
+  }
+  if (category === "Systems") return ["AI Infra", "Rust"].includes(project.category ?? "");
+  return project.category === "Web3";
+}
+
+function toEditorial(project: ProjectType, index: number): EditorialProject {
+  return {
+    ...project,
+    number: String(index + 1).padStart(2, "0"),
+  };
+}
 
 export default function ProjectsSection({ showTitle = true }: ProjectsSectionProps) {
-  const [selected, setSelected] = useState<(typeof categories)[number]>("All");
+  const [selected, setSelected] = useState<Category>("All");
 
   const filtered = useMemo(
-    () => selected === "All" ? projects : projects.filter((p) => p.category === selected),
-    [selected]
+    () => projects.filter((project) => matchesCategory(project, selected)),
+    [selected],
   );
 
   return (
-    <section id="projects" className="space-y-6">
+    <section id="projects" className="space-y-8">
       {showTitle && (
         <div className="space-y-2">
-          <p className="section-kicker">02 / Selected Work</p>
-          <h2 className="section-heading">Engineering evidence, not just screenshots.</h2>
-          <p className="max-w-2xl text-sm leading-relaxed text-foreground/58">
-            AI infrastructure, retrieval systems, LLM products, and lower-priority supporting Web3/Rust work.
+          <p className="section-kicker">02 / Projects</p>
+          <h2 className="section-heading">Projects</h2>
+          <p className="max-w-2xl text-sm leading-relaxed text-foreground/55">
+            The full archive — AI systems, backend work, retrieval experiments, and a few other rabbit holes.
           </p>
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-2">
-        {categories.map((cat) => {
-          const active = selected === cat;
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-border/60 py-3">
+        {categories.map((category) => {
+          const active = selected === category;
           return (
             <button
-              key={cat}
-              onClick={() => setSelected(cat)}
+              key={category}
+              type="button"
+              onClick={() => setSelected(category)}
               className={
-                "rounded-full border px-3 py-1.5 font-mono text-[11px] transition-colors " +
+                "relative py-1 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors " +
                 (active
-                  ? "border-foreground/25 bg-foreground/12 text-foreground"
-                  : "border-border/70 bg-card/60 text-foreground/55 hover:border-foreground/20 hover:text-foreground")
+                  ? "text-foreground after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-foreground"
+                  : "text-foreground/45 hover:text-foreground/75")
               }
               aria-pressed={active}
             >
-              {cat}
+              {category}
             </button>
           );
         })}
       </div>
 
       {filtered.length > 0 ? (
-        <div className="grid gap-4">
-          {filtered.map((project) => (
-            <ProjectCard key={project.title} project={project} compact={!project.isFeatured} />
+        <div className="grid gap-x-8 gap-y-12 md:grid-cols-2">
+          {filtered.map((project, index) => (
+            <ProjectEditorialCard
+              key={project.title}
+              project={toEditorial(project, index)}
+            />
           ))}
         </div>
       ) : (
-        <div className="rounded-lg border border-border/70 py-10 text-center text-sm text-foreground/40">
-          No projects found in this category.
-        </div>
+        <p className="border-t border-border/60 py-10 text-sm text-foreground/45">
+          No projects in this category yet.
+        </p>
       )}
     </section>
   );

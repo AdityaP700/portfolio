@@ -3,17 +3,17 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { ExternalLink, Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import WritingsSection from "@/components/sections/WritingsSection";
-import { FinalCTA } from "@/components/FinalCTA";
+
 import { Footer } from "@/components/Footer";
-import { projects } from "@/lib/projects";
-import ProjectCard from "@/components/ProjectCard";
+
+import { FlagshipProjects } from "@/components/projects/FlagshipProjects";
 import { GitHubContributions } from "@/components/GithubContributions";
 import WorkExperience from "@/components/WorkExperience";
-import LiveCommitFeed from "@/components/LiveCommitFeed";
-import TechStackMarquee from "@/components/TechStackMarquee";
+
+import StaticTechStack from "@/components/StaticTechStack/StaticTechStack";
 import ThemeToggle from "@/components/ThemeToggle";
 import VisitorCounter from "@/components/VisitorCounter";
 import NowPlaying from "@/components/NowPlaying";
@@ -23,23 +23,40 @@ const navItems = ["home", "projects", "writing"] as const;
 type ActiveView = (typeof navItems)[number];
 
 const XIcon = () => (
-  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <svg
+    className="h-4 w-4"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
 
-function TopNav({ activeView, setActiveView }: { activeView: ActiveView; setActiveView: (view: ActiveView) => void }) {
-  const [moreOpen, setMoreOpen] = useState(false);
+function TopNav({
+  activeView,
+  setActiveView,
+}: {
+  activeView: ActiveView;
+  setActiveView: (view: ActiveView) => void;
+}) {
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/72 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6">
         <button
           type="button"
           onClick={() => setActiveView("home")}
           className="flex items-center gap-2 rounded-full text-sm font-semibold tracking-tight text-foreground"
         >
-          <Image src="/X_pfp.jpg" alt="" width={28} height={28} className="rounded-full border border-border" />
+          <Image
+            src="/X_pfp.jpg"
+            alt=""
+            width={28}
+            height={28}
+            className="rounded-full border border-border"
+          />
           <span>Aditya</span>
         </button>
 
@@ -53,61 +70,65 @@ function TopNav({ activeView, setActiveView }: { activeView: ActiveView; setActi
                 onClick={() => setActiveView(item)}
                 className={
                   "rounded-full px-4 py-2 capitalize transition-colors " +
-                  (active ? "bg-foreground text-background" : "hover:text-foreground")
+                  (active
+                    ? "bg-foreground text-background"
+                    : "hover:text-foreground")
                 }
               >
                 {item === "writing" ? "Writing" : item}
               </button>
             );
           })}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setMoreOpen((value) => !value)}
-              className="rounded-full px-4 py-2 text-foreground/58 transition-colors hover:text-foreground"
-            >
-              More
-            </button>
-            {moreOpen && (
-              <div className="absolute right-0 top-11 w-48 overflow-hidden rounded-lg border border-border bg-card/95 p-1 shadow-2xl backdrop-blur-xl">
-                <ResumePreview label="Resume" className="h-9 w-full justify-start rounded-md border-0 bg-transparent px-3 text-sm text-foreground/72 hover:bg-foreground/10" />
-                <a className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground/72 hover:bg-foreground/10 hover:text-foreground" href="https://github.com/AdityaP700" target="_blank" rel="noopener noreferrer">
-                  <Github className="h-4 w-4" /> GitHub
-                </a>
-                <a className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground/72 hover:bg-foreground/10 hover:text-foreground" href="https://x.com/AdityaPat_" target="_blank" rel="noopener noreferrer">
-                  <XIcon /> X / Twitter
-                </a>
-                <a className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-foreground/72 hover:bg-foreground/10 hover:text-foreground" href="mailto:adityaa32078@gmail.com">
-                  <Mail className="h-4 w-4" /> Contact
-                </a>
-              </div>
-            )}
-          </div>
+
         </nav>
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <button
             type="button"
-            onClick={() => setMoreOpen((value) => !value)}
+            onClick={() => setMobileOpen((value) => !value)}
             className="rounded-full border border-border bg-card/70 p-2 text-foreground/70 sm:hidden"
             aria-label="Open menu"
           >
-            {moreOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {mobileOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
           </button>
         </div>
       </div>
 
-      {moreOpen && (
+      {mobileOpen && (
         <div className="border-t border-border bg-background/95 p-3 sm:hidden">
           <div className="grid gap-2">
             {navItems.map((item) => (
-              <button key={item} type="button" onClick={() => { setActiveView(item); setMoreOpen(false); }} className="rounded-md px-3 py-2 text-left text-sm capitalize text-foreground/75 hover:bg-foreground/10">
+              <button
+                key={item}
+                type="button"
+                onClick={() => {
+                  setActiveView(item);
+                  setMobileOpen(false);
+                }}
+                className="rounded-md px-3 py-2 text-left text-sm capitalize text-foreground/75 hover:bg-foreground/10"
+              >
                 {item === "writing" ? "Writing" : item}
               </button>
             ))}
-            <a className="rounded-md px-3 py-2 text-sm text-foreground/75 hover:bg-foreground/10" href="https://github.com/AdityaP700" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a className="rounded-md px-3 py-2 text-sm text-foreground/75 hover:bg-foreground/10" href="mailto:adityaa32078@gmail.com">Contact</a>
+            <a
+              className="rounded-md px-3 py-2 text-sm text-foreground/75 hover:bg-foreground/10"
+              href="https://github.com/AdityaP700"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+            <a
+              className="rounded-md px-3 py-2 text-sm text-foreground/75 hover:bg-foreground/10"
+              href="mailto:adityaa32078@gmail.com"
+            >
+              Contact
+            </a>
           </div>
         </div>
       )}
@@ -118,7 +139,15 @@ function TopNav({ activeView, setActiveView }: { activeView: ActiveView; setActi
 function Hero() {
   return (
     <section id="home" className="section-block pt-10 sm:pt-14">
-      <div className="hero-banner mb-8" />
+      <div className="hero-banner mb-8">
+        {/* The supplied GIF is a personal visual signature, not decorative UI. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://github.com/user-attachments/assets/bef5e226-e90d-476e-876c-617af679fce3"
+          alt="Animated personal banner"
+          className="h-full w-full object-cover"
+        />
+      </div>
       <div className="grid gap-8 md:grid-cols-[148px_1fr] md:items-start">
         <div className="relative w-max">
           <Image
@@ -129,9 +158,7 @@ function Hero() {
             priority
             className="rounded-lg border border-border bg-card shadow-2xl shadow-black/30"
           />
-          <div className="absolute -right-2 -top-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-1 font-mono text-[10px] uppercase tracking-wide text-emerald-300">
-            building
-          </div>
+
         </div>
 
         <div className="space-y-6">
@@ -144,27 +171,52 @@ function Hero() {
           </div>
 
           <div className="space-y-3">
-            <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-5xl">
               Aditya Pattanayak
             </h1>
-            <p className="font-mono text-lg text-foreground/62 sm:text-xl">AI Systems / Backend Engineer</p>
-            <p className="max-w-2xl text-base leading-relaxed text-foreground/70 sm:text-lg">
-              Building reliable LLM infrastructure, retrieval systems, and AI products.
+            <p className="font-mono text-base text-foreground/62 sm:text-lg">
+              AI Systems / Backend Engineer
             </p>
-            <p className="max-w-2xl text-sm leading-relaxed text-foreground/52">
-              Curious by default. I like understanding how things actually work, from retrieval failure modes to tool-calling reliability and backend systems that keep products honest.
+            <p className="max-w-2xl text-base leading-relaxed text-foreground/70">
+              I like building things, breaking them, and figuring out why they
+              broke.
+            </p>
+            <p className="max-w-2xl text-sm leading-relaxed text-foreground/55">
+              Recent rabbit holes: tool-calling reliability, retrieval failure
+              modes, and backend systems that keep products honest.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <a className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground" href="https://github.com/AdityaP700" target="_blank" rel="noopener noreferrer">
+            <a
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              href="https://github.com/AdityaP700"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Github className="h-3.5 w-3.5" /> GitHub
             </a>
-            <a className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground" href="https://www.linkedin.com/in/aditya-pattanayak-6b303b267/" target="_blank" rel="noopener noreferrer">
+            <a
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              href="https://www.linkedin.com/in/aditya-pattanayak-6b303b267/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Linkedin className="h-3.5 w-3.5" /> LinkedIn
             </a>
-            <ResumePreview label="Preview Resume" />
-            <a className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground" href="mailto:adityaa32078@gmail.com">
+            <a
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              href="https://x.com/AdityaPat_"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <XIcon /> X
+            </a>
+            <ResumePreview label="Resume" />
+            <a
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              href="mailto:adityaa32078@gmail.com"
+            >
               <Mail className="h-3.5 w-3.5" /> Email
             </a>
           </div>
@@ -176,18 +228,34 @@ function Hero() {
         </div>
       </div>
 
-      <div className="mt-10 grid gap-3 sm:grid-cols-3">
-        {[
-          ["Current", "Aegis", "agent reliability runtime"],
-          ["Latest writing", "LLM -> Tool", "reliability layer notes"],
-          ["Focus", "RAG / Backend", "evaluation and infra"],
-        ].map(([label, value, detail]) => (
-          <div key={label} className="rounded-lg border border-border/70 bg-card/60 p-4 backdrop-blur-md">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/35">{label}</p>
-            <p className="mt-2 text-sm font-semibold text-foreground">{value}</p>
-            <p className="mt-1 text-xs text-foreground/48">{detail}</p>
-          </div>
-        ))}
+      <div className="mt-12 border-t border-border/65 pt-8">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-foreground/45">
+          About
+        </p>
+        <ul className="mt-5 max-w-4xl space-y-4 text-[15px] leading-relaxed text-foreground/70 sm:text-base">
+          <li className="grid grid-cols-[12px_1fr] gap-3">
+            <span className="mt-[0.65em] h-1 w-1 rounded-full bg-foreground/35" />
+            <p>
+              I&apos;m an engineering student who learns by building first, then
+              pulling the system apart until I understand why it works.
+            </p>
+          </li>
+          <li className="grid grid-cols-[12px_1fr] gap-3">
+            <span className="mt-[0.65em] h-1 w-1 rounded-full bg-foreground/35" />
+            <p>
+              I work mostly around AI systems, backend infrastructure, retrieval,
+              and reliability — especially the quiet failures that make software
+              look healthy when it isn&apos;t.
+            </p>
+          </li>
+          <li className="grid grid-cols-[12px_1fr] gap-3">
+            <span className="mt-[0.65em] h-1 w-1 rounded-full bg-foreground/35" />
+            <p>
+              I enjoy turning fuzzy ideas into working products, measuring what
+              breaks, and refining the details until the result feels simple.
+            </p>
+          </li>
+        </ul>
       </div>
     </section>
   );
@@ -200,7 +268,7 @@ export default function Home() {
     <>
       <TopNav activeView={activeView} setActiveView={setActiveView} />
       <main className="w-full overflow-x-hidden px-3 sm:px-6">
-        <div className="page-shell mx-auto w-full max-w-5xl">
+        <div className="page-shell mx-auto w-full max-w-6xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeView}
@@ -216,7 +284,7 @@ export default function Home() {
                   <section className="section-block">
                     <div className="space-y-2">
                       <p className="section-kicker">01 / Experience</p>
-                      <h2 className="section-heading">Backend work, infra habits, production trade-offs.</h2>
+                      <h2 className="section-heading">Experience</h2>
                     </div>
                     <div className="mt-6">
                       <WorkExperience />
@@ -225,37 +293,49 @@ export default function Home() {
 
                   <section className="section-block">
                     <div className="space-y-2">
-                      <p className="section-kicker">02 / Featured Work</p>
-                      <h2 className="section-heading">Projects that support the AI systems story.</h2>
+                      <p className="section-kicker">02 / Projects</p>
+                      <h2 className="section-heading">Projects</h2>
                     </div>
-                    <div className="mt-6 grid gap-4">
-                      {projects.filter((p) => p.isFeatured).map((project) => (
-                        <ProjectCard key={project.title} project={project} />
-                      ))}
+                    <div className="mt-8">
+                      <FlagshipProjects />
                     </div>
                   </section>
 
                   <section className="section-block">
                     <div className="space-y-2">
                       <p className="section-kicker">03 / Stack</p>
-                      <h2 className="section-heading">Tools I use to build and ship.</h2>
+                      <h2 className="section-heading">Stack</h2>
                     </div>
                     <div className="mt-6">
-                      <TechStackMarquee />
+                      <StaticTechStack />
                     </div>
                   </section>
 
                   <section className="section-block">
                     <div className="space-y-2">
-                      <p className="section-kicker">04 / Activity</p>
-                      <h2 className="section-heading">Maintained in public.</h2>
+                      <p className="section-kicker">04 / GitHub</p>
+                      <h2 className="section-heading">GitHub Activity</h2>
                     </div>
-                    <div className="mt-6 space-y-5">
-                      <LiveCommitFeed />
+                    <p className="mt-3 text-sm text-foreground/55">
+                      A little proof that I&apos;m usually building something.
+                    </p>
+                    <div className="mt-8">
                       <GitHubContributions
                         theme={{
-                          light: ["#f5f3ed", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
-                          dark: ["rgba(255, 255, 255, 0.05)", "#0e4429", "#006d32", "#26a641", "#39d353"],
+                          light: [
+                            "#f5f3ed",
+                            "#c6e48b",
+                            "#7bc96f",
+                            "#239a3b",
+                            "#196127",
+                          ],
+                          dark: [
+                            "rgba(255, 255, 255, 0.05)",
+                            "#0e4429",
+                            "#006d32",
+                            "#26a641",
+                            "#39d353",
+                          ],
                         }}
                         maxLevel={4}
                       />
@@ -282,9 +362,6 @@ export default function Home() {
             </motion.div>
           </AnimatePresence>
 
-          <div className="section-block">
-            <FinalCTA />
-          </div>
         </div>
         <Footer />
       </main>

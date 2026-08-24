@@ -24,6 +24,7 @@ export const projects: ProjectType[] = [
     evidence:
       "Reduced silent tool-call failures from 6 -> 0 across an initial 22-case benchmark.",
     technologies: ["Python", "Agents", "Tool Calling", "Reliability", "Benchmarks"],
+    image: "/aegis.png",
     link: null,
     githubLink: "https://github.com/AdityaP700/Aegis",
     isLive: false,
@@ -49,6 +50,7 @@ export const projects: ProjectType[] = [
     description:
       "Adaptive RAG evaluator - retrieval failure analysis, BM25 + cross-encoder reranking, and context compression.",
     technologies: ["Python", "RAG", "BM25", "Reranking", "Evaluation"],
+    image: "/tokaroo.png",
     link: null,
     githubLink: "https://github.com/AdityaP700/Tokaroo",
     isLive: false,
@@ -61,6 +63,7 @@ export const projects: ProjectType[] = [
     description:
       "Chunking strategy explorer - how LLMs process and retrieve context, without abstraction layers.",
     technologies: ["Python", "Chunking", "Retrieval", "Embeddings", "Context"],
+    image: "/chunkdup.png",
     link: null,
     githubLink: "https://github.com/AdityaP700/ChunkdUp",
     isLive: false,
