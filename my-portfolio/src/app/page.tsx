@@ -244,7 +244,7 @@ function Hero() {
             <span className="mt-[0.65em] h-1 w-1 rounded-full bg-foreground/35" />
             <p>
               I work mostly around AI systems, backend infrastructure, retrieval,
-              and reliability — especially the quiet failures that make software
+              and reliability, especially the quiet failures that make software
               look healthy when it isn&apos;t.
             </p>
           </li>

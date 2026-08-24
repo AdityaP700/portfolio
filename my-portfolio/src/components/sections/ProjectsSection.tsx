@@ -53,7 +53,7 @@ export default function ProjectsSection({ showTitle = true }: ProjectsSectionPro
           <p className="section-kicker">02 / Projects</p>
           <h2 className="section-heading">Projects</h2>
           <p className="max-w-2xl text-sm leading-relaxed text-foreground/55">
-            The full archive — AI systems, backend work, retrieval experiments, and a few other rabbit holes.
+            The full archive :)
           </p>
         </div>
       )}
