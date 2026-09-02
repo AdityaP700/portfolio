@@ -61,7 +61,7 @@ export const projects: ProjectType[] = [
     category: "ML",
     isFeatured: true,
     description:
-      "Chunking strategy explorer - how LLMs process and retrieve context, without abstraction layers.",
+      "Persistent memory infrastructure for AI agents with intelligent memory policies, hybrid retrieval, and reliable PostgreSQL-backed storage.",
     technologies: ["Python", "Chunking", "Retrieval", "Embeddings", "Context"],
     image: "/chunkdup.png",
     link: null,

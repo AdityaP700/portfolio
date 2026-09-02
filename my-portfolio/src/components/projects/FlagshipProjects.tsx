@@ -56,21 +56,21 @@ export function FlagshipProjects() {
       githubLink: tokaroo?.githubLink,
       isLive: tokaroo?.isLive,
     },
-    {
-      title: "ChunkdUp",
-      number: "04",
-      eyebrow: chunkdup?.eyebrow ?? "Memory Infrastructure",
-      description:
-        chunkdup?.description ??
-        "Chunking strategy explorer for better context retrieval.",
-      technologies: chunkdup?.technologies,
-      image: chunkdup?.image,
-      link: chunkdup?.link ?? null,
-      githubLink: chunkdup?.githubLink,
-      isLive: chunkdup?.isLive,
-    },
-  ];
 
+{
+  title: "ChunkdUp",
+  number: "04",
+  eyebrow: chunkdup?.eyebrow ?? "Memory Infrastructure",
+  description:
+    chunkdup?.description ??
+    "Persistent memory infrastructure for AI agents with intelligent memory policies, hybrid retrieval, and reliable PostgreSQL-backed storage.",
+  technologies: chunkdup?.technologies,
+  image: chunkdup?.image,
+  link: chunkdup?.link ?? null,
+  githubLink: chunkdup?.githubLink,
+  isLive: chunkdup?.isLive,
+}
+  ]
   return (
     <div>
       <p className="text-sm text-foreground/55">A few things I&apos;ve been building.</p>
