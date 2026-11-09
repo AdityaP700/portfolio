@@ -139,14 +139,17 @@ function TopNav({
 function Hero() {
   return (
     <section id="home" className="section-block pt-10 sm:pt-14">
-      <div className="hero-banner mb-8">
-        {/* The supplied GIF is a personal visual signature, not decorative UI. */}
+      <div className="hero-banner mb-8 group relative overflow-hidden rounded-lg border border-border/70 bg-card/40">
+        {/* Local static asset - instantly cached, no external CDN / CORS / expired S3 url failure */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://github.com/user-attachments/assets/bef5e226-e90d-476e-876c-617af679fce3"
-          alt="Animated personal banner"
-          className="h-full w-full object-cover"
+          src="/banner.gif"
+          alt="Personal banner"
+          loading="eager"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]"
         />
+        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-foreground/10 rounded-[inherit]" />
       </div>
       <div className="grid gap-8 md:grid-cols-[148px_1fr] md:items-start">
         <div className="relative w-max">
@@ -156,40 +159,40 @@ function Hero() {
             width={132}
             height={132}
             priority
-            className="rounded-lg border border-border bg-card shadow-2xl shadow-black/30"
+            className="rounded-xl border border-border/80 bg-card shadow-2xl shadow-black/25 transition-transform duration-300 hover:scale-[1.02]"
           />
-
         </div>
 
         <div className="space-y-6">
-          <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-foreground/48">
+          <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-foreground/50">
             <span>India</span>
             <span>/</span>
-            <span>AI systems</span>
+            <span>AI Systems & Reliability</span>
             <span>/</span>
-            <span>open to internships</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] text-emerald-600 dark:text-emerald-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              open to opportunities
+            </span>
           </div>
 
           <div className="space-y-3">
             <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-5xl">
               Aditya Pattanayak
             </h1>
-            <p className="font-mono text-base text-foreground/62 sm:text-lg">
-              AI Systems / Backend Engineer
+            <p className="font-mono text-base text-foreground/70 sm:text-lg">
+              AI Systems & Backend Engineer
             </p>
-            <p className="max-w-2xl text-base leading-relaxed text-foreground/70">
-              I like building things, breaking them, and figuring out why they
-              broke.
+            <p className="max-w-2xl text-base leading-relaxed text-foreground/75">
+              I build AI systems, agent runtimes, and resilient backend infrastructure. I learn by building first, pushing systems to their failure boundaries, and eliminating the silent failures that make software look healthy when it isn&apos;t.
             </p>
             <p className="max-w-2xl text-sm leading-relaxed text-foreground/55">
-              Recent rabbit holes: tool-calling reliability, retrieval failure
-              modes, and backend systems that keep products honest.
+              Recent rabbit holes: deterministic tool-calling reliability, retrieval failure modes, agent memory architectures, and backend systems that keep AI products honest.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2.5">
             <a
-              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs font-medium text-foreground/75 shadow-sm transition-all hover:border-foreground/30 hover:bg-foreground/10 hover:text-foreground"
               href="https://github.com/AdityaP700"
               target="_blank"
               rel="noopener noreferrer"
@@ -197,7 +200,7 @@ function Hero() {
               <Github className="h-3.5 w-3.5" /> GitHub
             </a>
             <a
-              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs font-medium text-foreground/75 shadow-sm transition-all hover:border-foreground/30 hover:bg-foreground/10 hover:text-foreground"
               href="https://www.linkedin.com/in/aditya-pattanayak-6b303b267/"
               target="_blank"
               rel="noopener noreferrer"
@@ -205,7 +208,7 @@ function Hero() {
               <Linkedin className="h-3.5 w-3.5" /> LinkedIn
             </a>
             <a
-              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs font-medium text-foreground/75 shadow-sm transition-all hover:border-foreground/30 hover:bg-foreground/10 hover:text-foreground"
               href="https://x.com/AdityaPat_"
               target="_blank"
               rel="noopener noreferrer"
@@ -214,7 +217,7 @@ function Hero() {
             </a>
             <ResumePreview label="Resume" />
             <a
-              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs text-foreground/72 transition-colors hover:bg-foreground/10 hover:text-foreground"
+              className="inline-flex h-9 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 text-xs font-medium text-foreground/75 shadow-sm transition-all hover:border-foreground/30 hover:bg-foreground/10 hover:text-foreground"
               href="mailto:adityaa32078@gmail.com"
             >
               <Mail className="h-3.5 w-3.5" /> Email
@@ -234,25 +237,25 @@ function Hero() {
         </p>
         <ul className="mt-5 max-w-4xl space-y-4 text-[15px] leading-relaxed text-foreground/70 sm:text-base">
           <li className="grid grid-cols-[12px_1fr] gap-3">
-            <span className="mt-[0.65em] h-1 w-1 rounded-full bg-foreground/35" />
+            <span className="mt-[0.65em] h-1.5 w-1.5 rounded-full bg-foreground/35" />
             <p>
               I&apos;m an engineering student who learns by building first, then
-              pulling the system apart until I understand why it works.
+              pulling the system apart until I understand why it works and where it breaks.
             </p>
           </li>
           <li className="grid grid-cols-[12px_1fr] gap-3">
-            <span className="mt-[0.65em] h-1 w-1 rounded-full bg-foreground/35" />
+            <span className="mt-[0.65em] h-1.5 w-1.5 rounded-full bg-foreground/35" />
             <p>
               I work mostly around AI systems, backend infrastructure, retrieval,
-              and reliability, especially the quiet failures that make software
+              and reliability, especially the quiet failure modes that make software
               look healthy when it isn&apos;t.
             </p>
           </li>
           <li className="grid grid-cols-[12px_1fr] gap-3">
-            <span className="mt-[0.65em] h-1 w-1 rounded-full bg-foreground/35" />
+            <span className="mt-[0.65em] h-1.5 w-1.5 rounded-full bg-foreground/35" />
             <p>
               I enjoy turning fuzzy ideas into working products, measuring what
-              breaks, and refining the details until the result feels simple.
+              breaks under load or edge cases, and refining the details until the result feels simple.
             </p>
           </li>
         </ul>

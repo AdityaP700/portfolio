@@ -186,6 +186,28 @@ body {
     min-height: 100vh;
 }
 
+/* Smooth theme switching across surfaces, borders, text, and icons */
+html,
+body,
+.page-shell,
+.section-block,
+header,
+nav,
+article,
+button,
+a,
+input,
+svg,
+.hero-banner,
+.bg-card,
+.border-border,
+[class*="bg-"],
+[class*="border-"] {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Ensure marquee animations don't cause overflow */
 .marquee-mask {
     -webkit-mask-image: linear-gradient(

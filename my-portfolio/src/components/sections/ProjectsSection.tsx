@@ -18,8 +18,11 @@ function matchesCategory(project: ProjectType, category: Category) {
   if (category === "All") return true;
   if (category === "AI") return ["AI Infra", "LLM", "ML"].includes(project.category ?? "");
   if (category === "Backend") {
-    return project.technologies.some((tech) =>
-      ["Node.js", "Python", "SSE", "MongoDB", "Prisma"].includes(tech),
+    return (
+      ["AI Infra", "LLM", "Web3"].includes(project.category ?? "") ||
+      project.technologies.some((tech) =>
+        ["Node.js", "Python", "SSE", "MongoDB", "Prisma", "PostgreSQL", "Next.js"].includes(tech),
+      )
     );
   }
   if (category === "RAG") {

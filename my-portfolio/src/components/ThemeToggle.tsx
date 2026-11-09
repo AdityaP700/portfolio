@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   // Avoid hydration mismatch
@@ -14,28 +14,32 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-[50px] h-[26px] rounded-full bg-neutral-800 animate-pulse" />
+      <div className="w-[52px] h-[28px] rounded-full bg-neutral-200 dark:bg-neutral-800 animate-pulse" />
     );
   }
 
-  const isDark = theme === "dark";
+  const currentTheme = theme === "system" ? resolvedTheme : theme;
+  const isDark = currentTheme === "dark";
 
   return (
     <div className="flex items-center">
       <input
         type="checkbox"
         id="theme-checkbox"
+        aria-label="Toggle color theme"
         className="sr-only"
         checked={isDark}
         onChange={() => setTheme(isDark ? "light" : "dark")}
       />
       <label
         htmlFor="theme-checkbox"
-        className="relative flex items-center justify-between w-[50px] h-[26px] bg-neutral-800 dark:bg-neutral-700 rounded-full p-[5px] cursor-pointer transition-colors"
+        className="relative flex items-center justify-between w-[52px] h-[28px] bg-neutral-200 dark:bg-neutral-800 rounded-full p-[5px] cursor-pointer border border-border/80 transition-colors duration-300 select-none shadow-inner"
       >
         {/* Moon Icon */}
         <svg
-          className="w-3 h-3 text-yellow-300"
+          className={`w-3.5 h-3.5 text-yellow-300 transition-opacity duration-300 ${
+            isDark ? "opacity-100" : "opacity-40"
+          }`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +49,9 @@ export default function ThemeToggle() {
 
         {/* Sun Icon */}
         <svg
-          className="w-3 h-3 text-orange-400"
+          className={`w-3.5 h-3.5 text-amber-500 transition-opacity duration-300 ${
+            !isDark ? "opacity-100" : "opacity-40"
+          }`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -59,10 +65,10 @@ export default function ThemeToggle() {
 
         {/* Ball */}
         <span
-          className={`absolute w-[22px] h-[22px] bg-white rounded-full transition-transform duration-200 ease-linear ${
+          className={`absolute w-[22px] h-[22px] bg-white rounded-full shadow-md transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isDark ? "translate-x-[24px]" : "translate-x-0"
           }`}
-          style={{ left: "2px", top: "2px" }}
+          style={{ left: "2.5px", top: "2.5px" }}
         />
       </label>
     </div>
